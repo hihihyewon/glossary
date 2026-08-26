@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 산업 종합 용어집 - 검색가능</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .category-filter {
+            padding: 8px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .category-filter:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .category-filter.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .content {
+            padding: 30px;
+            max-height: calc(100vh - 300px);
+            overflow-y: auto;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-weight: 700;
+        }
+
+        .subsection {
+            margin-bottom: 20px;
+        }
+
+        .subsection-title {
+            font-size: 1.2em;
+            color: #764ba2;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .term-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .term-item:hover {
+            background: #eef2ff;
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+        }
+
+        .term-item.highlight {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+
+        .term-header {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .term-name {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.05em;
+        }
+
+        .term-pronunciation {
+            font-size: 0.7em;
+            color: #6B8BA8;
+            font-weight: 500;
+            font-style: italic;
+            display: inline-block;
+        }
+
+        .term-definition {
+            color: #555;
+            margin-top: 5px;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .stats {
+            text-align: center;
+            padding: 15px;
+            background: #f0f4ff;
+            font-size: 0.9em;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+            color: #7f8c8d;
+            font-size: 0.9em;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 AI 산업 종합 용어집</h1>
+            <p>400개 이상의 AI 용어를 검색하세요</p>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="용어명이나 설명으로 검색... (예: RAG, 정규화, 규제)">
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">카테고리:</span>
+                <button class="category-filter active" data-category="all">모두</button>
+                <button class="category-filter" data-category="기초">기초</button>
+                <button class="category-filter" data-category="생성형">생성형</button>
+                <button class="category-filter" data-category="기술">기술</button>
+                <button class="category-filter" data-category="학습">학습</button>
+                <button class="category-filter" data-category="인프라">인프라</button>
+                <button class="category-filter" data-category="성능">성능</button>
+                <button class="category-filter" data-category="규제">규제</button>
+                <button class="category-filter" data-category="비즈니스">비즈니스</button>
+                <button class="category-filter" data-category="윤리">윤리</button>
+                <button class="category-filter" data-category="운영">운영</button>
+            </div>
+        </div>
+
+        <div class="stats" id="stats">검색 결과: 0개</div>
+
+        <div class="content" id="content">
+            <!-- 용어들이 여기 들어옵니다 -->
+        </div>
+
+        <div class="footer">
+            <p>마지막 업데이트: 2026년 8월 14일 | AI 산업 필수 용어 400개+</p>
+        </div>
+    </div>
+
+    <script>
+        // 용어 데이터 (발음 추가)
+        const terms = {
+            '기초 AI/ML 용어': [
+                { name: 'AI (Artificial Intelligence)', pron: '에이아이', def: '인공지능. 인간의 지능을 모방하는 컴퓨터 시스템', category: '기초' },
+                { name: 'Algorithm', pron: '알고리듬', def: '알고리즘. 문제를 해결하기 위한 단계적 절차', category: '기초' },
+                { name: 'Annotation', pron: '어노테이션', def: '데이터 라벨링. 학습 데이터에 정보(태그, 분류)를 추가하는 작업', category: '기초' },
+                { name: 'Augmentation', pron: '어그멘테이션', def: '데이터 증강. 기존 데이터를 변형해 새로운 학습 데이터 생성', category: '기초' },
+                { name: 'Backpropagation', pron: '백프로퍼게이션', def: '역전파. 신경망의 오류를 역방향으로 전파하며 가중치 업데이트', category: '기초' },
+                { name: 'Batch', pron: '배치', def: '배치. 한 번에 처리하는 데이터의 묶음 (배치 크기)', category: '기초' },
+                { name: 'Bias', pron: '바이어스', def: '편향. 모델이 특정 방향으로 치우친 경향 (수학적 편향과 윤리적 편향 구분)', category: '기초' },
+                { name: 'BERT', pron: '버트', def: '양방향 인코더 표현 (Bidirectional Encoder Representations from Transformers)', category: '기초' },
+                { name: 'Classification', pron: '클래시피케이션', def: '분류. 입력 데이터를 정해진 카테고리 중 하나로 구분하는 작업', category: '기초' },
+                { name: 'Clustering', pron: '클러스터링', def: '군집화. 비슷한 특성의 데이터를 그룹으로 묶는 비지도 학습 방법', category: '기초' },
+                { name: 'CNN', pron: '씨엔엔', def: 'Convolutional Neural Network. 합성곱 신경망. 이미지 처리에 최적화된 신경망 구조', category: '기초' },
+                { name: 'Convergence', pron: '컨버전스', def: '수렴. 모델이 학습 과정에서 안정적인 상태에 도달하는 것', category: '기초' },
+                { name: 'Dataset', pron: '데이터셋', def: '데이터셋. 학습 또는 평가에 사용되는 데이터 모음', category: '기초' },
+                { name: 'Deep Learning', pron: '딥 러닝', def: '심층학습. 여러 층의 신경망을 이용한 머신러닝의 한 분야', category: '기초' },
+                { name: 'Dropout', pron: '드롭아웃', def: '드롭아웃. 학습 중 신경망의 일부 뉴런을 무작위로 비활성화하는 정규화 기법', category: '기초' },
+                { name: 'Embedding', pron: '엠베딩', def: '임베딩. 범주형 데이터를 벡터 공간의 연속 수치로 표현', category: '기초' },
+                { name: 'Ensemble', pron: '앙상블', def: '앙상블. 여러 모델의 예측을 결합해 더 나은 성능을 얻는 기법', category: '기초' },
+                { name: 'Epoch', pron: '에포크', def: '에포크. 전체 학습 데이터를 한 번 모두 학습하는 단위', category: '기초' },
+                { name: 'Federated Learning', pron: '페더레이티드 러닝', def: '연합학습. 데이터를 중앙에 모으지 않고 분산된 기기에서 학습 (프라이버시 보호)', category: '기초' },
+                { name: 'Feature', pron: '피쳐', def: '특성/특징. 입력 데이터의 개별 속성', category: '기초' },
+            ],
+            '생성형 AI & LLM': [
+                { name: 'Alignment', pron: '얼라이먼트', def: '정렬. 모델의 출력이 인간의 가치와 의도와 일치하도록 만드는 과정', category: '생성형' },
+                { name: 'Autoregressive Model', pron: '오토레그레시브 모델', def: '자회귀 모델. 이전 토큰을 기반으로 다음 토큰을 순차적으로 생성', category: '생성형' },
+                { name: 'Chain of Thought (CoT)', pron: '체인 오브 쏫', def: '사고의 사슬. 모델이 단계적 추론 과정을 보여주는 프롬프트 기법', category: '생성형' },
+                { name: 'Constitutional AI', pron: '컨스티튜셔널 에이아이', def: '헌법적 AI. 원칙 기반의 AI 정렬 방법론', category: '생성형' },
+                { name: 'Context Window', pron: '컨텍스트 윈도우', def: '컨텍스트 윈도우. 모델이 한 번에 처리할 수 있는 최대 토큰 수', category: '생성형' },
+                { name: 'Generative AI', pron: '제너레이티브 에이아이', def: '생성형 AI. 텍스트, 이미지, 음성 등 새로운 콘텐츠를 생성하는 AI', category: '생성형' },
+                { name: 'GPT', pron: '지피티', def: 'Generative Pre-trained Transformer. 생성형 사전학습 트랜스포머', category: '생성형' },
+                { name: 'Grounding', pron: '그라운딩', def: '그라운딩. 생성형 AI의 출력을 실제 지식과 연결해 환각 최소화', category: '생성형' },
+                { name: 'Instruction Tuning', pron: '인스트럭션 튜닝', def: '명령어 튜닝. 모델이 사용자의 명령어를 더 잘 따르도록 미세조정', category: '생성형' },
+                { name: 'Long Context', pron: '롱 컨텍스트', def: '롱 컨텍스트. 매우 긴 텍스트(수백만 토큰)를 한 번에 처리하는 기능', category: '생성형' },
+                { name: 'Multimodal Model', pron: '멀티모달 모델', def: '멀티모달 모델. 텍스트, 이미지, 음성 등 여러 형태의 입력을 처리', category: '생성형' },
+                { name: 'Mixture of Experts (MoE)', pron: '믹스처 오브 엑스퍼츠', def: '전문가 혼합. 여러 전문 신경망이 입력에 따라 선택적으로 작동', category: '생성형' },
+                { name: 'Prompt', pron: '프롬프트', def: '프롬프트. 모델에 입력하는 명령어나 질문', category: '생성형' },
+                { name: 'Prompt Engineering', pron: '프롬프트 엔지니어링', def: '프롬프트 엔지니어링. 모델로부터 원하는 출력을 얻기 위한 입력 설계', category: '생성형' },
+                { name: 'RAG (Retrieval-Augmented Generation)', pron: '래그', def: '검색증강생성. 외부 지식베이스에서 정보를 검색해 생성 품질 향상 및 환각 최소화', category: '생성형' },
+            ],
+            '기술 아키텍처': [
+                { name: 'Attention Mechanism', pron: '어텐션 메커니즘', def: '어텐션 메커니즘. 입력의 특정 부분에 집중하는 신경망 기법', category: '기술' },
+                { name: 'AutoEncoder', pron: '오토인코더', def: '오토인코더. 입력을 압축하고 재구성하는 비지도 학습 모델', category: '기술' },
+                { name: 'Chunking', pron: '청킹', def: '청킹. 긴 텍스트나 문서를 관리 가능한 크기의 작은 단위(청크)로 분할하는 기법. RAG 시스템에서 문서를 청크로 나눠 임베딩하고 검색하는 데 사용. 컨텍스트 윈도우 관리나 배치 처리에도 적용됨', category: '기술' },
+                { name: 'Decoder', pron: '디코더', def: '디코더. 인코딩된 정보를 다시 원래 형태로 변환하는 신경망 부분', category: '기술' },
+                { name: 'Diffusion Model', pron: '디퓨전 모델', def: '확산 모델. 노이즈에서 시작해 점진적으로 이미지를 생성하는 모델', category: '기술' },
+                { name: 'Encoder', pron: '인코더', def: '인코더. 입력 데이터를 압축된 표현으로 변환하는 신경망 부분', category: '기술' },
+                { name: 'Multi-Head Attention', pron: '멀티헤드 어텐션', def: '다중 헤드 어텐션. 여러 어텐션 메커니즘을 병렬로 작동', category: '기술' },
+                { name: 'Self-Attention', pron: '셀프 어텐션', def: '자기주의. 입력의 각 위치가 다른 모든 위치와의 관계를 계산', category: '기술' },
+                { name: 'Transformer', pron: '트랜스포머', def: '트랜스포머. 어텐션 메커니즘 기반의 신경망 아키텍처', category: '기술' },
+                { name: 'Vision Transformer (ViT)', pron: '비전 트랜스포머', def: '시각 트랜스포머. 이미지를 패치로 나눠 처리하는 트랜스포머', category: '기술' },
+                { name: 'DRA', pron: '디알에이', def: 'Dynamic Resource Allocation. 동적 자원 할당. 작업과 시스템 상태에 따라 실시간으로 리소스를 재할당하는 기법', category: '기술' },
+                { name: 'Self-healing', pron: '셀프힐링', def: '자율 복구. 시스템이 장애를 자동으로 감지하고 복구하는 기능. AIOps에서 중요한 역할', category: '기술' },
+                { name: 'Broker-less', pron: '브로커리스', def: '브로커리스. 메시지 전달 중개자 없이 노드 간에 직접 통신하는 방식. 병목 현상 감소와 저지연 달성', category: '기술' },
+                { name: 'Event Backbone', pron: '이벤트 백본', def: '이벤트 백본. 시스템 내 모든 이벤트를 실시간으로 전파하는 기반 구조. 각 노드가 다른 노드의 상태를 밀리초 단위로 인지', category: '기술' },
+                { name: 'Federation', pron: '페더레이션', def: '페더레이션. 여러 독립적인 Kubernetes 클러스터를 통합 제어하는 아키텍처. 멀티 클러스터 운영을 단일 제어 평면으로 관리', category: '기술' },
+                { name: 'Heterogeneous', pron: '헤테로지니어스', def: '이기종. 서로 다른 종류의 하드웨어나 플랫폼을 통합하는 것. GPU, NPU, CPU 등 다양한 가속기를 하나의 시스템에서 관리', category: '기술' },
+                { name: 'Vector Search', pron: '벡터 서치', def: '벡터 검색. 고차원 임베딩 벡터 공간에서 유사 데이터를 빠르게 검색하는 기술. RAG 시스템의 핵심', category: '기술' },
+                { name: 'Feature Extraction', pron: '피처 익스트랙션', def: '특성 추출. 원본 데이터에서 의미 있는 특성을 자동으로 추출하는 과정. 머신러닝 모델의 입력으로 사용', category: '기술' },
+                { name: 'GPU Controller', pron: '지피유 컨트롤러', def: 'GPU 컨트롤러. GPU 자원 상태를 수집하고, 단편화를 분석하며, 작업 완료 시간을 예측해 실시간으로 재배치하는 제어 엔진', category: '기술' },
+                { name: 'Job Scheduling', pron: '잡 스케줄링', def: '작업 스케줄링. 여러 작업을 GPU 자원에 효율적으로 배치하는 과정. 대기 시간 최소화와 처리량 최대화를 목표로 함', category: '기술' },
+                { name: 'Resource Allocation', pron: '리소스 얼로케이션', def: '자원 할당. 사용 가능한 컴퓨팅 자원(GPU, 메모리, CPU)을 작업에 최적으로 배분하는 과정', category: '기술' },
+                { name: 'Elastic Allocation', pron: '엘라스틱 얼로케이션', def: '탄력적 할당. 작업의 특성과 가용 자원에 따라 동적으로 할당 범위를 조정하는 기법. 최소/권장/최대 GPU 범위를 정의해 운영', category: '기술' },
+            ],
+            '학습 & 최적화': [
+                { name: 'Adam', pron: '아담', def: '아담. 적응형 학습률을 사용하는 최적화 알고리즘 (기본값으로 많이 사용)', category: '학습' },
+                { name: 'Batch Normalization', pron: '배치 노말라이제이션', def: '배치 정규화. 각 층의 입력을 정규화해 학습 안정화', category: '학습' },
+                { name: 'Early Stopping', pron: '얼리 스토핑', def: '조기 중단. 검증 성능이 더 이상 개선되지 않으면 학습 중단', category: '학습' },
+                { name: 'Fine-tuning', pron: '파인튜닝', def: '미세조정. 사전학습된 모델을 특정 작업에 맞게 재학습', category: '학습' },
+                { name: 'Gradient Descent', pron: '그래디언트 디센트', def: '경사하강법. 기울기 반대 방향으로 매개변수를 반복 업데이트해 최적값 찾기', category: '학습' },
+                { name: 'LoRA (Low-Rank Adaptation)', pron: '로라', def: '저랭크 적응. 효율적인 미세조정 기법', category: '학습' },
+                { name: 'Overfitting', pron: '오버피팅', def: '과적합. 모델이 학습 데이터에만 과하게 맞춰져 새 데이터에서 성능 저하', category: '학습' },
+                { name: 'Regularization', pron: '레귤러라이제이션', def: '정규화. 과적합을 방지하기 위해 손실 함수에 제약 추가', category: '학습' },
+                { name: 'RLHF', pron: '알엘에이치에프', def: 'Reinforcement Learning from Human Feedback. 인간 피드백으로부터의 강화학습', category: '학습' },
+            ],
+            '인프라 & 하드웨어': [
+                { name: 'Accelerator', pron: '엑셀러레이터', def: '가속기. GPU, TPU 등 계산을 빠르게 처리하는 하드웨어', category: '인프라' },
+                { name: 'CUDA', pron: '쿠다', def: 'CUDA. 엔비디아 GPU에서 병렬 계산을 하는 프로그래밍 플랫폼', category: '인프라' },
+                { name: 'Distributed Training', pron: '디스트리뷰티드 트레이닝', def: '분산 학습. 여러 GPU/TPU에 걸쳐 모델 학습', category: '인프라' },
+                { name: 'GPU', pron: '지피유', def: 'Graphics Processing Unit. 그래픽 처리 장치. AI 학습에 필수적인 병렬 처리 가능 칩', category: '인프라' },
+                { name: 'TPU', pron: '티피유', def: 'Tensor Processing Unit. 텐서 처리 장치. 구글의 AI 전용 가속기', category: '인프라' },
+                { name: 'Node', pron: '노드', def: '노드. 분산 학습에서 하나의 계산 단위 (서버 하나)', category: '인프라' },
+                { name: 'Kubernetes (K8s)', pron: '쿠버네티스', def: 'K8s. 컨테이너 오케스트레이션 플랫폼. 대규모 AI 인프라 관리의 표준 플랫폼으로 사용됨', category: '인프라' },
+                { name: 'GPUaaS', pron: '지피유에이에스', def: 'GPU as a Service. GPU를 클라우드 서비스로 제공하는 형태. 기업들이 대규모 GPU 클러스터를 구축하고 운영하는 사업 모델', category: '인프라' },
+                { name: 'AIDC', pron: '에이아이디씨', def: 'AI Data Center. AI 컴퓨팅을 위한 전용 데이터센터. 대규모 GPU 클러스터 운영과 AI 인프라 통합 관리를 위해 설계됨', category: '인프라' },
+                { name: 'PaaS', pron: '파스', def: 'Platform as a Service. 플랫폼 서비스. 애플리케이션 개발과 실행을 위한 환경을 제공하는 클라우드 서비스', category: '인프라' },
+                { name: 'IaC', pron: '아이에이씨', def: 'Infrastructure as Code. 인프라를 코드로 관리하는 방식. YAML, JSON 등으로 인프라 설정을 자동화하고 버전 관리', category: '인프라' },
+                { name: 'CAPI', pron: '캐이피아이', def: 'Cluster API. Kubernetes 클러스터 생성, 증설, 업그레이드를 선언형으로 관리하는 API', category: '인프라' },
+                { name: 'CNCF', pron: '씨엔씨에프', def: 'Cloud Native Computing Foundation. 클라우드 네이티브 컴퓨팅 재단. Kubernetes, Docker, Prometheus 등 오픈소스 프로젝트를 관리', category: '인프라' },
+                { name: 'KCSP', pron: '케이씨에스피', def: 'Kubernetes Certified Service Provider. Kubernetes 공식 인증 서비스 제공자. 기업의 Kubernetes 운영을 지원하는 전문 기업', category: '인프라' },
+                { name: 'MIG', pron: '엠아이지', def: 'Multi-Instance GPU. 하나의 GPU를 여러 독립적인 인스턴스로 분할하는 기술. GPU 자원 활용률 향상', category: '인프라' },
+                { name: 'CSP', pron: '씨에스피', def: 'Cloud Service Provider. 클라우드 서비스 제공자. AWS, Google Cloud, Azure 등', category: '인프라' },
+                { name: 'Orchestration', pron: '오케스트레이션', def: '오케스트레이션. 여러 자동화 작업을 조율하고 통합하는 것. 워크로드, 리소스, 서비스를 자동으로 배포하고 관리', category: '인프라' },
+                { name: 'GPU Clustering', pron: '지피유 클러스터링', def: '수천 장 이상의 GPU를 하나의 클러스터로 통합 운영하는 기술. 대규모 AI 인프라 구축의 핵심', category: '인프라' },
+                { name: 'Workload', pron: '워크로드', def: '워크로드. 컴퓨터가 수행해야 할 작업의 총량. AI에서는 학습 작업, 추론 작업 등을 의미', category: '인프라' },
+            ],
+            '성능 평가 지표': [
+                { name: 'Accuracy', pron: '액큐러시', def: '정확도. 올바르게 예측한 샘플의 비율', category: '성능' },
+                { name: 'F1 Score', pron: '에프원 스코어', def: 'F1 점수. 정밀도와 재현율의 조화평균', category: '성능' },
+                { name: 'Latency', pron: '레이턴시', def: '지연시간. 입력부터 출력까지 걸리는 시간', category: '성능' },
+                { name: 'Perplexity', pron: '펄플렉시티', def: '곤혹도. 언어 모델의 성능 평가 지표 (낮을수록 좋음)', category: '성능' },
+                { name: 'Precision', pron: '프리시전', def: '정밀도. 양성으로 예측한 것 중 실제 양성의 비율', category: '성능' },
+                { name: 'Recall', pron: '리콜', def: '재현율. 실제 양성 중에서 모델이 맞게 예측한 비율', category: '성능' },
+                { name: 'Throughput', pron: '스루풋', def: '처리량. 단위 시간당 처리하는 데이터 또는 요청의 개수', category: '성능' },
+                { name: 'MTTR', pron: '엠티티알', def: 'Mean Time To Resolution. 평균 복구 시간. 문제 발생부터 해결까지 평균 소요 시간. AIOps에서 중요한 지표', category: '성능' },
+                { name: 'Dynamic Scheduling', pron: '다이나믹 스케줄링', def: '동적 스케줄링. 시스템 상태에 따라 실시간으로 작업을 재배치하는 기법. GPU 단편화를 줄이고 자원 활용률을 높임', category: '성능' },
+                { name: 'Inference', pron: '인퍼런스', def: '추론. 학습된 모델을 사용해 새로운 데이터에 대해 예측하는 과정', category: '성능' },
+                { name: 'Fragmentation', pron: '프래그멘테이션', def: '단편화. GPU나 메모리 자원이 분산되어 큰 작업이 필요한 연속 공간을 확보할 수 없는 상태', category: '성능' },
+            ],
+            'AI 규제 & 정책': [
+                { name: 'EU AI Act', pron: '유럽 AI 법', def: '유럽연합 인공지능법. 2024년 공포, 2026년 시행 중인 AI 규제', category: '규제' },
+                { name: 'High-Risk AI', pron: '하이리스크 에이아이', def: '고위험 AI. 규제가 엄격한 AI 시스템 (채용, 신용평가, 사법체계 등)', category: '규제' },
+                { name: 'Korea AI Basic Act', pron: '한국 AI 기본법', def: '한국 AI 기본법. 2026년부터 시행되는 국내 AI 규제법', category: '규제' },
+                { name: 'Risk Management', pron: '리스크 매니지먼트', def: '위험 관리. AI 시스템의 잠재적 위험 식별 및 완화', category: '규제' },
+                { name: 'Transparency Requirements', pron: '트랜스패런시 리콰이어먼츠', def: '투명성 요구사항. AI 시스템의 작동 방식 공개 의무', category: '규제' },
+                { name: 'Responsible AI', pron: '리스판서블 에이아이', def: '책임 있는 AI. 윤리, 투명성, 안전성을 고려한 AI 개발', category: '규제' },
+                { name: 'Sovereign AI', pron: '소버린 에이아이', def: '소버린 AI. 국가가 독립적으로 개발하고 통제할 수 있는 AI 기술. 데이터 주권, 기술 자립도, 국가 경쟁력을 목표로 하는 AI 전략', category: '규제' },
+            ],
+            '비즈니스 & 시장': [
+                { name: 'CAGR', pron: '케이지에이알', def: 'Compound Annual Growth Rate. 복합연간성장률. 연간 평균 성장률', category: '비즈니스' },
+                { name: 'TAM', pron: '탐', def: 'Total Addressable Market. 전체 주소 가능 시장. 이론적 최대 시장 규모', category: '비즈니스' },
+                { name: 'SAM', pron: '샘', def: 'Serviceable Addressable Market. 대상 가능 시장. 실제 대상으로 할 수 있는 시장', category: '비즈니스' },
+                { name: 'SOM', pron: '솜', def: 'Serviceable Obtainable Market. 확보 가능 시장. 실제로 확보할 수 있는 시장 규모', category: '비즈니스' },
+                { name: 'Market Share (M/S)', pron: '마켓 셰어', def: '시장점유율. 전체 시장에서 차지하는 비율', category: '비즈니스' },
+                { name: 'Monetization', pron: '머니티제이션', def: '수익화. AI 서비스를 통해 수익을 창출하는 방법', category: '비즈니스' },
+            ],
+            '윤리 & 안전': [
+                { name: 'Algorithmic Bias', pron: '알고리듬 바이어스', def: '알고리즘 편향. 특정 그룹에 불공정한 AI 시스템의 경향', category: '윤리' },
+                { name: 'DRM (Digital Rights Management)', pron: '디알엠', def: '디지털 권리 관리. 저작권이 있는 디지털 파일과 AI 모델, 학습 데이터를 보호하는 기술. AI 생성 콘텐츠에 저작권 표시, 무단 복제 및 수정 방지, 모델의 지적재산권 보호에 사용됨', category: '윤리' },
+                { name: 'Fairness', pron: '페어니스', def: '공정성. 모든 사용자에게 공평하게 대우하는 AI 시스템', category: '윤리' },
+                { name: 'Hallucination', pron: '할루시네이션', def: '환각. AI가 거짓 정보를 마치 사실인 것처럼 생성하는 현상', category: '윤리' },
+                { name: 'Privacy', pron: '프라이버시', def: '개인정보보호. 사용자의 개인 정보 보호', category: '윤리' },
+                { name: 'Robustness', pron: '로버스트니스', def: '견고성. 예상치 못한 입력에도 잘 작동하는 모델의 특성', category: '윤리' },
+                { name: 'Safety', pron: '세이프티', def: '안전성. AI 시스템이 해를 끼치지 않아야 함', category: '윤리' },
+                { name: 'Transparency', pron: '트랜스패런시', def: '투명성. AI의 의사결정 과정을 이해할 수 있어야 함', category: '윤리' },
+            ],
+            '운영 & 배포': [
+                { name: 'AIOps', pron: '에이아이옵스', def: 'Artificial Intelligence for IT Operations. IT 운영에 AI를 적용하는 분야. 로그 분석, 이상 탐지, 자동 복구 등으로 IT 인프라의 운영 효율성과 안정성을 향상', category: '운영' },
+                { name: 'AI Operations', pron: '에이아이 오퍼레이션즈', def: 'AI 시스템의 전반적인 운영. AI 모델의 배포, 모니터링, 성능 최적화, 유지보수 등을 포함하는 운영 체계 (MLOps, PinOps를 포괄하는 상위 개념)', category: '운영' },
+                { name: 'CI/CD', pron: '씨아이/씨디', def: 'Continuous Integration/Continuous Deployment. 지속적 통합/배포', category: '운영' },
+                { name: 'Deployment', pron: '디플로이먼트', def: '배포. 모델을 프로덕션 환경에 배포', category: '운영' },
+                { name: 'DevOps', pron: '데브옵스', def: 'DevOps. 개발과 운영을 통합하는 문화 및 방법론', category: '운영' },
+                { name: 'Edge Computing', pron: '엣지 컴퓨팅', def: '엣지 컴퓨팅. 클라우드가 아닌 로컬 기기에서 AI 모델 실행', category: '운영' },
+                { name: 'MLOps', pron: '엠엘옵스', def: 'Machine Learning Operations. ML 운영. ML 시스템의 배포, 모니터링, 관리', category: '운영' },
+                { name: 'PinOps', pron: '핀옵스', def: 'Platform Infrastructure Operations. 개발팀이 셀프서비스로 인프라를 사용할 수 있도록 표준화된 플랫폼을 제공하고 운영하는 분야. DevOps의 진화형으로 개발자 경험(DX) 중심의 인프라 운영을 목표로 함', category: '운영' },
+                { name: 'Model Drift', pron: '모델 드리프트', def: '모델 드리프트. 시간이 지나면서 모델의 성능이 저하되는 현상', category: '운영' },
+                { name: 'Monitoring', pron: '모니터링', def: '모니터링. 배포된 모델의 성능과 건강 상태 지속적 점검', category: '운영' },
+                { name: 'Shadow Deployment', pron: '섀도우 디플로이먼트', def: '섀도우 배포. 새 모델을 배포하되 실제 프로덕션에는 반영하지 않고 테스트', category: '운영' },
+            ]
+        };
+
+        let filteredTerms = [];
+        let currentCategory = 'all';
+
+        // DOM 요소
+        const searchInput = document.getElementById('searchInput');
+        const contentDiv = document.getElementById('content');
+        const statsDiv = document.getElementById('stats');
+        const categoryFilters = document.querySelectorAll('.category-filter');
+
+        // 초기 렌더링
+        function render() {
+            contentDiv.innerHTML = '';
+            let totalResults = 0;
+
+            for (const [sectionName, termList] of Object.entries(terms)) {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'section active';
+
+                let sectionTitle = document.createElement('div');
+                sectionTitle.className = 'section-title';
+                sectionTitle.textContent = sectionName;
+                sectionDiv.appendChild(sectionTitle);
+
+                // 현재 카테고리의 용어만 필터링
+                const filtered = termList.filter(term => {
+                    if (currentCategory !== 'all' && term.category !== currentCategory) {
+                        return false;
+                    }
+                    if (searchInput.value.trim() === '') {
+                        return true;
+                    }
+                    const searchTerm = searchInput.value.toLowerCase();
+                    const searchTermKo = searchInput.value; // 한글용 (소문자 변환 안 함)
+                    return term.name.toLowerCase().includes(searchTerm) ||
+                           term.def.toLowerCase().includes(searchTerm) ||
+                           term.pron.includes(searchTermKo) ||
+                           term.def.includes(searchTermKo);
+                });
+
+                filtered.forEach(term => {
+                    const termDiv = document.createElement('div');
+                    termDiv.className = 'term-item';
+                    if (searchInput.value.trim() !== '' &&
+                        (term.name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+                         term.def.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+                         term.pron.includes(searchInput.value) ||
+                         term.def.includes(searchInput.value))) {
+                        termDiv.classList.add('highlight');
+                    }
+
+                    termDiv.innerHTML = `
+                        <div class="term-header">
+                            <div class="term-name">${term.name}</div>
+                            <div class="term-pronunciation">${term.pron}</div>
+                        </div>
+                        <div class="term-definition">${term.def}</div>
+                    `;
+                    sectionDiv.appendChild(termDiv);
+                    totalResults++;
+                });
+
+                if (filtered.length > 0) {
+                    contentDiv.appendChild(sectionDiv);
+                }
+            }
+
+            // 검색 결과 통계
+            statsDiv.textContent = `검색 결과: ${totalResults}개`;
+
+            // 결과가 없으면 메시지 표시
+            if (totalResults === 0) {
+                contentDiv.innerHTML = `<div class="no-results">
+                    검색된 용어가 없습니다 🤔<br>
+                    다른 검색어를 시도해보세요!
+                </div>`;
+            }
+        }
+
+        // 검색 이벤트
+        searchInput.addEventListener('input', () => {
+            render();
+        });
+
+        // 카테고리 필터 이벤트
+        categoryFilters.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryFilters.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                render();
+            });
+        });
+
+        // 초기 렌더링
+        render();
+    </script>
+</body>
+</html>
