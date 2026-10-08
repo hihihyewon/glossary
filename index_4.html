@@ -1,557 +1,311 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 산업 종합 용어집 - 검색가능</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI·인프라·거버넌스 404개 용어를 영문 표기, 한글 발음, 한 줄 정의, 사용 빈도로 정리한 사전.">
+<title>클러쉬 AI 용어 사전</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* 레이아웃: 사전형 2단 — 왼쪽 표제어+발음, 오른쪽 정의. 상단 고정 검색바 + 분야 칩 */
+:root{
+  --paper:#E6E9F1; --card:#F7F8FC; --ink:#0D1730; --ink-mid:#5A6480;
+  --rule:#C7CEDF; --accent:#2A34D4; --mark:#FFD1E3; --mark-fg:#0D1730;
+  --chip-bg:#DDE3FA; --chip-fg:#2A34D4; --shadow:rgba(13,23,48,.08);
+  --sans:'IBM Plex Sans KR',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --grotesk:'Archivo','IBM Plex Sans KR',Helvetica,Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gut:clamp(16px,4vw,56px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0B1020; --card:#141B30; --ink:#E7EBF5; --ink-mid:#9AA4C0;
+  --rule:#2A3350; --accent:#8E97FF; --mark:#5A2D47; --mark-fg:#FFE3EF;
+  --chip-bg:#1E2748; --chip-fg:#A8B0FF; --shadow:rgba(0,0,0,.4);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0B1020; --card:#141B30; --ink:#E7EBF5; --ink-mid:#9AA4C0;
+  --rule:#2A3350; --accent:#8E97FF; --mark:#5A2D47; --mark-fg:#FFE3EF;
+  --chip-bg:#1E2748; --chip-fg:#A8B0FF; --shadow:rgba(0,0,0,.4);
+  color-scheme:dark;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:3px}
+mark{background:var(--mark);color:var(--mark-fg);padding:0 .1em;border-radius:2px}
+.wrap{max-width:1380px;margin:0 auto;padding-inline:var(--gut)}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #2c3e50;
-        }
+/* masthead */
+.masthead{padding-block:clamp(26px,5vw,56px) clamp(16px,2.5vw,28px)}
+.eyebrow{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--accent)}
+h1{font-weight:700;font-size:clamp(1.45rem,3.2vw,2rem);letter-spacing:-.03em;
+  line-height:1.25;margin-top:10px;text-wrap:balance}
+.sub{color:var(--ink-mid);margin-top:10px;max-width:60ch;font-size:.93rem}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+/* specimen */
+.spec{border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);
+  padding-block:clamp(18px,3vw,34px);display:flex;flex-wrap:wrap;
+  align-items:flex-end;gap:clamp(12px,2.5vw,36px)}
+.spec__label{font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-mid);width:100%}
+.spec__term{font-family:var(--grotesk);font-weight:700;font-stretch:118%;
+  font-size:clamp(1.8rem,6.5vw,4rem);line-height:.98;letter-spacing:-.035em;
+  flex:1 1 auto;min-width:0;overflow-wrap:break-word}
+.spec__side{display:flex;align-items:center;gap:10px;padding-bottom:.35em}
+.spec__pron{font-family:var(--mono);font-size:clamp(.95rem,2.2vw,1.35rem);
+  color:var(--accent);white-space:nowrap}
+.spec__def{flex:0 1 38ch;min-width:0;color:var(--ink-mid);font-size:.88rem;
+  line-height:1.55;padding-bottom:.4em}
+.shuffle{background:none;border:1.5px solid var(--rule);border-radius:100px;
+  padding:7px 14px;font-family:var(--mono);font-size:.68rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid);cursor:pointer;
+  transition:border-color .15s,color .15s}
+.shuffle:hover{border-color:var(--ink);color:var(--ink)}
 
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
+/* speak */
+.say{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule);
+  background:transparent;color:var(--accent);display:grid;place-items:center;cursor:pointer;
+  transition:background .15s,border-color .15s,color .15s}
+.say svg{width:11px;height:11px;fill:currentColor}
+.say:hover,.say.on{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.spec__side .say{width:38px;height:38px}
+.spec__side .say svg{width:13px;height:13px}
 
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
+/* searchbar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+  background:var(--paper);border-bottom:1px solid var(--rule)}
+.bar__in{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:12px}
+.field{flex:1 1 240px;min-width:0;display:flex;align-items:center;gap:10px;
+  border:1.5px solid var(--ink);border-radius:100px;background:var(--card);
+  padding-inline:18px;height:46px;transition:box-shadow .15s}
+.field:focus-within{box-shadow:0 0 0 3px var(--chip-bg)}
+.field>svg{width:15px;height:15px;fill:none;stroke:var(--ink-mid);stroke-width:2;flex:none}
+#q{flex:1;min-width:0;border:none;background:none;font-family:var(--sans);
+  font-size:1rem;color:var(--ink)}
+#q:focus{outline:none}
+.kbd{font-family:var(--mono);font-size:.66rem;color:var(--ink-mid);
+  border:1px solid var(--rule);border-radius:5px;padding:2px 6px;flex:none}
+.clear{border:none;background:none;color:var(--ink-mid);cursor:pointer;
+  font-size:1.05rem;line-height:1;padding:4px}
+.count{font-family:var(--mono);font-size:.74rem;color:var(--ink-mid);white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.count b{color:var(--accent);font-weight:600}
 
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
+/* chips */
+.rail{display:flex;gap:8px;overflow-x:auto;padding-block:16px 8px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rail button{white-space:nowrap;border:1.5px solid var(--rule);background:transparent;
+  border-radius:100px;padding:7px 15px;cursor:pointer;color:var(--ink-mid);
+  font-family:var(--sans);font-size:.85rem;font-weight:500;
+  transition:border-color .15s,color .15s,background .15s}
+.rail button:hover{border-color:var(--ink);color:var(--ink)}
+.rail button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.rail .n{font-family:var(--mono);font-size:.7rem;opacity:.65;margin-left:7px}
+.rail .doc[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
 
-        .controls {
-            padding: 20px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px 15px 12px 40px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #7f8c8d;
-            font-size: 1.2em;
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .filter-label {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .category-filter {
-            padding: 8px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 20px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-            font-weight: 500;
-            color: #2c3e50;
-        }
-
-        .category-filter:hover {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-
-        .category-filter.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .content {
-            padding: 30px;
-            max-height: calc(100vh - 300px);
-            overflow-y: auto;
-        }
-
-        .section {
-            margin-bottom: 30px;
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        .section-title {
-            font-size: 1.8em;
-            color: #667eea;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
-            font-weight: 700;
-        }
-
-        .subsection {
-            margin-bottom: 20px;
-        }
-
-        .subsection-title {
-            font-size: 1.2em;
-            color: #764ba2;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .term-item {
-            padding: 12px;
-            margin-bottom: 10px;
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .term-item:hover {
-            background: #eef2ff;
-            transform: translateX(5px);
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
-        }
-
-        .term-item.highlight {
-            background: #fff3cd;
-            border-left-color: #ffc107;
-        }
-
-        .term-header {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .term-name {
-            font-weight: 700;
-            color: #667eea;
-            font-size: 1.05em;
-        }
-
-        .term-pronunciation {
-            font-size: 0.7em;
-            color: #6B8BA8;
-            font-weight: 500;
-            font-style: italic;
-            display: inline-block;
-        }
-
-        .term-definition {
-            color: #555;
-            margin-top: 5px;
-            font-size: 0.95em;
-            line-height: 1.5;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 40px 20px;
-            color: #7f8c8d;
-            font-size: 1.1em;
-        }
-
-        .stats {
-            text-align: center;
-            padding: 15px;
-            background: #f0f4ff;
-            font-size: 0.9em;
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        .footer {
-            padding: 20px;
-            text-align: center;
-            background: #f8f9fa;
-            color: #7f8c8d;
-            font-size: 0.9em;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #667eea;
-            border-radius: 4px;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            .controls {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .search-box {
-                min-width: 100%;
-            }
-
-            .filter-group {
-                width: 100%;
-            }
-
-            .content {
-                padding: 15px;
-            }
-        }
-    </style>
+/* results */
+main{padding-bottom:72px}
+.sec{margin-top:clamp(26px,3.5vw,46px)}
+.sec__head{display:flex;align-items:baseline;gap:12px;padding-bottom:9px;
+  border-bottom:1.5px solid var(--ink)}
+.sec__head h2{font-size:.98rem;font-weight:700;letter-spacing:-.01em}
+.sec__head .n{font-family:var(--mono);font-size:.7rem;color:var(--ink-mid)}
+.entry{display:grid;grid-template-columns:1fr;gap:5px;padding-block:16px;
+  border-bottom:1px solid var(--rule)}
+.key{display:flex;flex-wrap:wrap;align-items:center;gap:7px 11px}
+.term{font-family:var(--grotesk);font-weight:700;font-stretch:112%;
+  font-size:1.05rem;letter-spacing:-.02em;line-height:1.3;min-width:0;overflow-wrap:break-word}
+.pron{font-family:var(--mono);font-size:.82rem;color:var(--accent)}
+.def{color:var(--ink-mid);font-size:.93rem;max-width:72ch;min-width:0}
+.freq{display:inline-flex;gap:3px;align-items:center;flex:none}
+.freq i{width:7px;height:7px;border:1.5px solid var(--rule);border-radius:2px;display:block}
+.freq i.on{background:var(--accent);border-color:var(--accent)}
+.legend{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--ink-mid);font-size:.78rem;padding-block:10px 0}
+.legend .freq i{width:6px;height:6px}
+@media (min-width:880px){
+  .entry{grid-template-columns:minmax(0,330px) minmax(0,1fr);gap:0 40px;align-items:start}
+  .key{flex-direction:column;align-items:flex-start;gap:5px}
+  .key .row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;min-width:0}
+  .def{padding-top:2px}
+}
+.empty{padding-block:60px;max-width:48ch}
+.empty h3{font-size:1.1rem;letter-spacing:-.02em}
+.empty p{color:var(--ink-mid);margin-top:8px;font-size:.92rem}
+.empty button{margin-top:18px;border:1.5px solid var(--ink);background:var(--ink);
+  color:var(--paper);border-radius:100px;padding:10px 20px;font-family:var(--sans);
+  font-size:.9rem;cursor:pointer}
+footer{border-top:1px solid var(--rule);padding-block:24px 56px;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-mid);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🔍 AI 산업 종합 용어집</h1>
-            <p>400개 이상의 AI 용어를 검색하세요</p>
-        </div>
 
-        <div class="controls">
-            <div class="search-box">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" placeholder="용어명이나 설명으로 검색... (예: RAG, 정규화, 규제)">
-            </div>
-            <div class="filter-group">
-                <span class="filter-label">카테고리:</span>
-                <button class="category-filter active" data-category="all">모두</button>
-                <button class="category-filter" data-category="기초">기초</button>
-                <button class="category-filter" data-category="생성형">생성형</button>
-                <button class="category-filter" data-category="기술">기술</button>
-                <button class="category-filter" data-category="학습">학습</button>
-                <button class="category-filter" data-category="인프라">인프라</button>
-                <button class="category-filter" data-category="성능">성능</button>
-                <button class="category-filter" data-category="규제">규제</button>
-                <button class="category-filter" data-category="비즈니스">비즈니스</button>
-                <button class="category-filter" data-category="윤리">윤리</button>
-                <button class="category-filter" data-category="운영">운영</button>
-            </div>
-        </div>
 
-        <div class="stats" id="stats">검색 결과: 0개</div>
+<header class="wrap masthead">
+  <div class="eyebrow">Clush · AI Lexicon</div>
+  <h1>회의에서 바로 쓰는 AI 용어 사전</h1>
+  <p class="sub">영문 표기, 한글 발음, 한 줄 정의. 영어·한글·설명 어느 쪽으로 검색해도 찾을 수 있습니다. 각 용어 옆 세 칸은 사용 빈도입니다. 사내 문서에서 실제로 쓰인 횟수(60%)와 업계 전반의 사용 빈도(40%)를 합산했습니다.</p>
+</header>
 
-        <div class="content" id="content">
-            <!-- 용어들이 여기 들어옵니다 -->
-        </div>
-
-        <div class="footer">
-            <p>마지막 업데이트: 2026년 8월 14일 | AI 산업 필수 용어 400개+</p>
-        </div>
+<section class="wrap" aria-label="오늘의 용어">
+  <div class="spec">
+    <div class="spec__label">오늘의 용어</div>
+    <div class="spec__term" id="specTerm">&nbsp;</div>
+    <div class="spec__side">
+      <div class="spec__pron" id="specPron"></div>
+      <button class="say" id="specSay" aria-label="발음 듣기">
+        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.2 10.4 6 2 10.8z"/></svg>
+      </button>
     </div>
+    <p class="spec__def" id="specDef"></p>
+    <button class="shuffle" id="shuffle" type="button">다른 용어</button>
+  </div>
+</section>
 
-    <script>
-        // 용어 데이터 (발음 추가)
-        const terms = {
-            '기초 AI/ML 용어': [
-                { name: 'AI (Artificial Intelligence)', pron: '에이아이', def: '인공지능. 인간의 지능을 모방하는 컴퓨터 시스템', category: '기초' },
-                { name: 'Algorithm', pron: '알고리듬', def: '알고리즘. 문제를 해결하기 위한 단계적 절차', category: '기초' },
-                { name: 'Annotation', pron: '어노테이션', def: '데이터 라벨링. 학습 데이터에 정보(태그, 분류)를 추가하는 작업', category: '기초' },
-                { name: 'Augmentation', pron: '어그멘테이션', def: '데이터 증강. 기존 데이터를 변형해 새로운 학습 데이터 생성', category: '기초' },
-                { name: 'Backpropagation', pron: '백프로퍼게이션', def: '역전파. 신경망의 오류를 역방향으로 전파하며 가중치 업데이트', category: '기초' },
-                { name: 'Batch', pron: '배치', def: '배치. 한 번에 처리하는 데이터의 묶음 (배치 크기)', category: '기초' },
-                { name: 'Bias', pron: '바이어스', def: '편향. 모델이 특정 방향으로 치우친 경향 (수학적 편향과 윤리적 편향 구분)', category: '기초' },
-                { name: 'BERT', pron: '버트', def: '양방향 인코더 표현 (Bidirectional Encoder Representations from Transformers)', category: '기초' },
-                { name: 'Classification', pron: '클래시피케이션', def: '분류. 입력 데이터를 정해진 카테고리 중 하나로 구분하는 작업', category: '기초' },
-                { name: 'Clustering', pron: '클러스터링', def: '군집화. 비슷한 특성의 데이터를 그룹으로 묶는 비지도 학습 방법', category: '기초' },
-                { name: 'CNN', pron: '씨엔엔', def: 'Convolutional Neural Network. 합성곱 신경망. 이미지 처리에 최적화된 신경망 구조', category: '기초' },
-                { name: 'Convergence', pron: '컨버전스', def: '수렴. 모델이 학습 과정에서 안정적인 상태에 도달하는 것', category: '기초' },
-                { name: 'Dataset', pron: '데이터셋', def: '데이터셋. 학습 또는 평가에 사용되는 데이터 모음', category: '기초' },
-                { name: 'Deep Learning', pron: '딥 러닝', def: '심층학습. 여러 층의 신경망을 이용한 머신러닝의 한 분야', category: '기초' },
-                { name: 'Dropout', pron: '드롭아웃', def: '드롭아웃. 학습 중 신경망의 일부 뉴런을 무작위로 비활성화하는 정규화 기법', category: '기초' },
-                { name: 'Embedding', pron: '엠베딩', def: '임베딩. 범주형 데이터를 벡터 공간의 연속 수치로 표현', category: '기초' },
-                { name: 'Ensemble', pron: '앙상블', def: '앙상블. 여러 모델의 예측을 결합해 더 나은 성능을 얻는 기법', category: '기초' },
-                { name: 'Epoch', pron: '에포크', def: '에포크. 전체 학습 데이터를 한 번 모두 학습하는 단위', category: '기초' },
-                { name: 'Federated Learning', pron: '페더레이티드 러닝', def: '연합학습. 데이터를 중앙에 모으지 않고 분산된 기기에서 학습 (프라이버시 보호)', category: '기초' },
-                { name: 'Feature', pron: '피쳐', def: '특성/특징. 입력 데이터의 개별 속성', category: '기초' },
-            ],
-            '생성형 AI & LLM': [
-                { name: 'Alignment', pron: '얼라이먼트', def: '정렬. 모델의 출력이 인간의 가치와 의도와 일치하도록 만드는 과정', category: '생성형' },
-                { name: 'Autoregressive Model', pron: '오토레그레시브 모델', def: '자회귀 모델. 이전 토큰을 기반으로 다음 토큰을 순차적으로 생성', category: '생성형' },
-                { name: 'Chain of Thought (CoT)', pron: '체인 오브 쏫', def: '사고의 사슬. 모델이 단계적 추론 과정을 보여주는 프롬프트 기법', category: '생성형' },
-                { name: 'Constitutional AI', pron: '컨스티튜셔널 에이아이', def: '헌법적 AI. 원칙 기반의 AI 정렬 방법론', category: '생성형' },
-                { name: 'Context Window', pron: '컨텍스트 윈도우', def: '컨텍스트 윈도우. 모델이 한 번에 처리할 수 있는 최대 토큰 수', category: '생성형' },
-                { name: 'Generative AI', pron: '제너레이티브 에이아이', def: '생성형 AI. 텍스트, 이미지, 음성 등 새로운 콘텐츠를 생성하는 AI', category: '생성형' },
-                { name: 'GPT', pron: '지피티', def: 'Generative Pre-trained Transformer. 생성형 사전학습 트랜스포머', category: '생성형' },
-                { name: 'Grounding', pron: '그라운딩', def: '그라운딩. 생성형 AI의 출력을 실제 지식과 연결해 환각 최소화', category: '생성형' },
-                { name: 'Instruction Tuning', pron: '인스트럭션 튜닝', def: '명령어 튜닝. 모델이 사용자의 명령어를 더 잘 따르도록 미세조정', category: '생성형' },
-                { name: 'Long Context', pron: '롱 컨텍스트', def: '롱 컨텍스트. 매우 긴 텍스트(수백만 토큰)를 한 번에 처리하는 기능', category: '생성형' },
-                { name: 'Multimodal Model', pron: '멀티모달 모델', def: '멀티모달 모델. 텍스트, 이미지, 음성 등 여러 형태의 입력을 처리', category: '생성형' },
-                { name: 'Mixture of Experts (MoE)', pron: '믹스처 오브 엑스퍼츠', def: '전문가 혼합. 여러 전문 신경망이 입력에 따라 선택적으로 작동', category: '생성형' },
-                { name: 'Prompt', pron: '프롬프트', def: '프롬프트. 모델에 입력하는 명령어나 질문', category: '생성형' },
-                { name: 'Prompt Engineering', pron: '프롬프트 엔지니어링', def: '프롬프트 엔지니어링. 모델로부터 원하는 출력을 얻기 위한 입력 설계', category: '생성형' },
-                { name: 'RAG (Retrieval-Augmented Generation)', pron: '래그', def: '검색증강생성. 외부 지식베이스에서 정보를 검색해 생성 품질 향상 및 환각 최소화', category: '생성형' },
-            ],
-            '기술 아키텍처': [
-                { name: 'Attention Mechanism', pron: '어텐션 메커니즘', def: '어텐션 메커니즘. 입력의 특정 부분에 집중하는 신경망 기법', category: '기술' },
-                { name: 'AutoEncoder', pron: '오토인코더', def: '오토인코더. 입력을 압축하고 재구성하는 비지도 학습 모델', category: '기술' },
-                { name: 'Chunking', pron: '청킹', def: '청킹. 긴 텍스트나 문서를 관리 가능한 크기의 작은 단위(청크)로 분할하는 기법. RAG 시스템에서 문서를 청크로 나눠 임베딩하고 검색하는 데 사용. 컨텍스트 윈도우 관리나 배치 처리에도 적용됨', category: '기술' },
-                { name: 'Decoder', pron: '디코더', def: '디코더. 인코딩된 정보를 다시 원래 형태로 변환하는 신경망 부분', category: '기술' },
-                { name: 'Diffusion Model', pron: '디퓨전 모델', def: '확산 모델. 노이즈에서 시작해 점진적으로 이미지를 생성하는 모델', category: '기술' },
-                { name: 'Encoder', pron: '인코더', def: '인코더. 입력 데이터를 압축된 표현으로 변환하는 신경망 부분', category: '기술' },
-                { name: 'Multi-Head Attention', pron: '멀티헤드 어텐션', def: '다중 헤드 어텐션. 여러 어텐션 메커니즘을 병렬로 작동', category: '기술' },
-                { name: 'Self-Attention', pron: '셀프 어텐션', def: '자기주의. 입력의 각 위치가 다른 모든 위치와의 관계를 계산', category: '기술' },
-                { name: 'Transformer', pron: '트랜스포머', def: '트랜스포머. 어텐션 메커니즘 기반의 신경망 아키텍처', category: '기술' },
-                { name: 'Vision Transformer (ViT)', pron: '비전 트랜스포머', def: '시각 트랜스포머. 이미지를 패치로 나눠 처리하는 트랜스포머', category: '기술' },
-                { name: 'DRA', pron: '디알에이', def: 'Dynamic Resource Allocation. 동적 자원 할당. 작업과 시스템 상태에 따라 실시간으로 리소스를 재할당하는 기법', category: '기술' },
-                { name: 'Self-healing', pron: '셀프힐링', def: '자율 복구. 시스템이 장애를 자동으로 감지하고 복구하는 기능. AIOps에서 중요한 역할', category: '기술' },
-                { name: 'Broker-less', pron: '브로커리스', def: '브로커리스. 메시지 전달 중개자 없이 노드 간에 직접 통신하는 방식. 병목 현상 감소와 저지연 달성', category: '기술' },
-                { name: 'Event Backbone', pron: '이벤트 백본', def: '이벤트 백본. 시스템 내 모든 이벤트를 실시간으로 전파하는 기반 구조. 각 노드가 다른 노드의 상태를 밀리초 단위로 인지', category: '기술' },
-                { name: 'Federation', pron: '페더레이션', def: '페더레이션. 여러 독립적인 Kubernetes 클러스터를 통합 제어하는 아키텍처. 멀티 클러스터 운영을 단일 제어 평면으로 관리', category: '기술' },
-                { name: 'Heterogeneous', pron: '헤테로지니어스', def: '이기종. 서로 다른 종류의 하드웨어나 플랫폼을 통합하는 것. GPU, NPU, CPU 등 다양한 가속기를 하나의 시스템에서 관리', category: '기술' },
-                { name: 'Vector Search', pron: '벡터 서치', def: '벡터 검색. 고차원 임베딩 벡터 공간에서 유사 데이터를 빠르게 검색하는 기술. RAG 시스템의 핵심', category: '기술' },
-                { name: 'Feature Extraction', pron: '피처 익스트랙션', def: '특성 추출. 원본 데이터에서 의미 있는 특성을 자동으로 추출하는 과정. 머신러닝 모델의 입력으로 사용', category: '기술' },
-                { name: 'GPU Controller', pron: '지피유 컨트롤러', def: 'GPU 컨트롤러. GPU 자원 상태를 수집하고, 단편화를 분석하며, 작업 완료 시간을 예측해 실시간으로 재배치하는 제어 엔진', category: '기술' },
-                { name: 'Job Scheduling', pron: '잡 스케줄링', def: '작업 스케줄링. 여러 작업을 GPU 자원에 효율적으로 배치하는 과정. 대기 시간 최소화와 처리량 최대화를 목표로 함', category: '기술' },
-                { name: 'Resource Allocation', pron: '리소스 얼로케이션', def: '자원 할당. 사용 가능한 컴퓨팅 자원(GPU, 메모리, CPU)을 작업에 최적으로 배분하는 과정', category: '기술' },
-                { name: 'Elastic Allocation', pron: '엘라스틱 얼로케이션', def: '탄력적 할당. 작업의 특성과 가용 자원에 따라 동적으로 할당 범위를 조정하는 기법. 최소/권장/최대 GPU 범위를 정의해 운영', category: '기술' },
-            ],
-            '학습 & 최적화': [
-                { name: 'Adam', pron: '아담', def: '아담. 적응형 학습률을 사용하는 최적화 알고리즘 (기본값으로 많이 사용)', category: '학습' },
-                { name: 'Batch Normalization', pron: '배치 노말라이제이션', def: '배치 정규화. 각 층의 입력을 정규화해 학습 안정화', category: '학습' },
-                { name: 'Early Stopping', pron: '얼리 스토핑', def: '조기 중단. 검증 성능이 더 이상 개선되지 않으면 학습 중단', category: '학습' },
-                { name: 'Fine-tuning', pron: '파인튜닝', def: '미세조정. 사전학습된 모델을 특정 작업에 맞게 재학습', category: '학습' },
-                { name: 'Gradient Descent', pron: '그래디언트 디센트', def: '경사하강법. 기울기 반대 방향으로 매개변수를 반복 업데이트해 최적값 찾기', category: '학습' },
-                { name: 'LoRA (Low-Rank Adaptation)', pron: '로라', def: '저랭크 적응. 효율적인 미세조정 기법', category: '학습' },
-                { name: 'Overfitting', pron: '오버피팅', def: '과적합. 모델이 학습 데이터에만 과하게 맞춰져 새 데이터에서 성능 저하', category: '학습' },
-                { name: 'Regularization', pron: '레귤러라이제이션', def: '정규화. 과적합을 방지하기 위해 손실 함수에 제약 추가', category: '학습' },
-                { name: 'RLHF', pron: '알엘에이치에프', def: 'Reinforcement Learning from Human Feedback. 인간 피드백으로부터의 강화학습', category: '학습' },
-            ],
-            '인프라 & 하드웨어': [
-                { name: 'Accelerator', pron: '엑셀러레이터', def: '가속기. GPU, TPU 등 계산을 빠르게 처리하는 하드웨어', category: '인프라' },
-                { name: 'CUDA', pron: '쿠다', def: 'CUDA. 엔비디아 GPU에서 병렬 계산을 하는 프로그래밍 플랫폼', category: '인프라' },
-                { name: 'Distributed Training', pron: '디스트리뷰티드 트레이닝', def: '분산 학습. 여러 GPU/TPU에 걸쳐 모델 학습', category: '인프라' },
-                { name: 'GPU', pron: '지피유', def: 'Graphics Processing Unit. 그래픽 처리 장치. AI 학습에 필수적인 병렬 처리 가능 칩', category: '인프라' },
-                { name: 'TPU', pron: '티피유', def: 'Tensor Processing Unit. 텐서 처리 장치. 구글의 AI 전용 가속기', category: '인프라' },
-                { name: 'Node', pron: '노드', def: '노드. 분산 학습에서 하나의 계산 단위 (서버 하나)', category: '인프라' },
-                { name: 'Kubernetes (K8s)', pron: '쿠버네티스', def: 'K8s. 컨테이너 오케스트레이션 플랫폼. 대규모 AI 인프라 관리의 표준 플랫폼으로 사용됨', category: '인프라' },
-                { name: 'GPUaaS', pron: '지피유에이에스', def: 'GPU as a Service. GPU를 클라우드 서비스로 제공하는 형태. 기업들이 대규모 GPU 클러스터를 구축하고 운영하는 사업 모델', category: '인프라' },
-                { name: 'AIDC', pron: '에이아이디씨', def: 'AI Data Center. AI 컴퓨팅을 위한 전용 데이터센터. 대규모 GPU 클러스터 운영과 AI 인프라 통합 관리를 위해 설계됨', category: '인프라' },
-                { name: 'PaaS', pron: '파스', def: 'Platform as a Service. 플랫폼 서비스. 애플리케이션 개발과 실행을 위한 환경을 제공하는 클라우드 서비스', category: '인프라' },
-                { name: 'IaC', pron: '아이에이씨', def: 'Infrastructure as Code. 인프라를 코드로 관리하는 방식. YAML, JSON 등으로 인프라 설정을 자동화하고 버전 관리', category: '인프라' },
-                { name: 'CAPI', pron: '캐이피아이', def: 'Cluster API. Kubernetes 클러스터 생성, 증설, 업그레이드를 선언형으로 관리하는 API', category: '인프라' },
-                { name: 'CNCF', pron: '씨엔씨에프', def: 'Cloud Native Computing Foundation. 클라우드 네이티브 컴퓨팅 재단. Kubernetes, Docker, Prometheus 등 오픈소스 프로젝트를 관리', category: '인프라' },
-                { name: 'KCSP', pron: '케이씨에스피', def: 'Kubernetes Certified Service Provider. Kubernetes 공식 인증 서비스 제공자. 기업의 Kubernetes 운영을 지원하는 전문 기업', category: '인프라' },
-                { name: 'MIG', pron: '엠아이지', def: 'Multi-Instance GPU. 하나의 GPU를 여러 독립적인 인스턴스로 분할하는 기술. GPU 자원 활용률 향상', category: '인프라' },
-                { name: 'CSP', pron: '씨에스피', def: 'Cloud Service Provider. 클라우드 서비스 제공자. AWS, Google Cloud, Azure 등', category: '인프라' },
-                { name: 'Orchestration', pron: '오케스트레이션', def: '오케스트레이션. 여러 자동화 작업을 조율하고 통합하는 것. 워크로드, 리소스, 서비스를 자동으로 배포하고 관리', category: '인프라' },
-                { name: 'GPU Clustering', pron: '지피유 클러스터링', def: '수천 장 이상의 GPU를 하나의 클러스터로 통합 운영하는 기술. 대규모 AI 인프라 구축의 핵심', category: '인프라' },
-                { name: 'Workload', pron: '워크로드', def: '워크로드. 컴퓨터가 수행해야 할 작업의 총량. AI에서는 학습 작업, 추론 작업 등을 의미', category: '인프라' },
-            ],
-            '성능 평가 지표': [
-                { name: 'Accuracy', pron: '액큐러시', def: '정확도. 올바르게 예측한 샘플의 비율', category: '성능' },
-                { name: 'F1 Score', pron: '에프원 스코어', def: 'F1 점수. 정밀도와 재현율의 조화평균', category: '성능' },
-                { name: 'Latency', pron: '레이턴시', def: '지연시간. 입력부터 출력까지 걸리는 시간', category: '성능' },
-                { name: 'Perplexity', pron: '펄플렉시티', def: '곤혹도. 언어 모델의 성능 평가 지표 (낮을수록 좋음)', category: '성능' },
-                { name: 'Precision', pron: '프리시전', def: '정밀도. 양성으로 예측한 것 중 실제 양성의 비율', category: '성능' },
-                { name: 'Recall', pron: '리콜', def: '재현율. 실제 양성 중에서 모델이 맞게 예측한 비율', category: '성능' },
-                { name: 'Throughput', pron: '스루풋', def: '처리량. 단위 시간당 처리하는 데이터 또는 요청의 개수', category: '성능' },
-                { name: 'MTTR', pron: '엠티티알', def: 'Mean Time To Resolution. 평균 복구 시간. 문제 발생부터 해결까지 평균 소요 시간. AIOps에서 중요한 지표', category: '성능' },
-                { name: 'Dynamic Scheduling', pron: '다이나믹 스케줄링', def: '동적 스케줄링. 시스템 상태에 따라 실시간으로 작업을 재배치하는 기법. GPU 단편화를 줄이고 자원 활용률을 높임', category: '성능' },
-                { name: 'Inference', pron: '인퍼런스', def: '추론. 학습된 모델을 사용해 새로운 데이터에 대해 예측하는 과정', category: '성능' },
-                { name: 'Fragmentation', pron: '프래그멘테이션', def: '단편화. GPU나 메모리 자원이 분산되어 큰 작업이 필요한 연속 공간을 확보할 수 없는 상태', category: '성능' },
-            ],
-            'AI 규제 & 정책': [
-                { name: 'EU AI Act', pron: '유럽 AI 법', def: '유럽연합 인공지능법. 2024년 공포, 2026년 시행 중인 AI 규제', category: '규제' },
-                { name: 'High-Risk AI', pron: '하이리스크 에이아이', def: '고위험 AI. 규제가 엄격한 AI 시스템 (채용, 신용평가, 사법체계 등)', category: '규제' },
-                { name: 'Korea AI Basic Act', pron: '한국 AI 기본법', def: '한국 AI 기본법. 2026년부터 시행되는 국내 AI 규제법', category: '규제' },
-                { name: 'Risk Management', pron: '리스크 매니지먼트', def: '위험 관리. AI 시스템의 잠재적 위험 식별 및 완화', category: '규제' },
-                { name: 'Transparency Requirements', pron: '트랜스패런시 리콰이어먼츠', def: '투명성 요구사항. AI 시스템의 작동 방식 공개 의무', category: '규제' },
-                { name: 'Responsible AI', pron: '리스판서블 에이아이', def: '책임 있는 AI. 윤리, 투명성, 안전성을 고려한 AI 개발', category: '규제' },
-                { name: 'Sovereign AI', pron: '소버린 에이아이', def: '소버린 AI. 국가가 독립적으로 개발하고 통제할 수 있는 AI 기술. 데이터 주권, 기술 자립도, 국가 경쟁력을 목표로 하는 AI 전략', category: '규제' },
-            ],
-            '비즈니스 & 시장': [
-                { name: 'CAGR', pron: '케이지에이알', def: 'Compound Annual Growth Rate. 복합연간성장률. 연간 평균 성장률', category: '비즈니스' },
-                { name: 'TAM', pron: '탐', def: 'Total Addressable Market. 전체 주소 가능 시장. 이론적 최대 시장 규모', category: '비즈니스' },
-                { name: 'SAM', pron: '샘', def: 'Serviceable Addressable Market. 대상 가능 시장. 실제 대상으로 할 수 있는 시장', category: '비즈니스' },
-                { name: 'SOM', pron: '솜', def: 'Serviceable Obtainable Market. 확보 가능 시장. 실제로 확보할 수 있는 시장 규모', category: '비즈니스' },
-                { name: 'Market Share (M/S)', pron: '마켓 셰어', def: '시장점유율. 전체 시장에서 차지하는 비율', category: '비즈니스' },
-                { name: 'Monetization', pron: '머니티제이션', def: '수익화. AI 서비스를 통해 수익을 창출하는 방법', category: '비즈니스' },
-            ],
-            '윤리 & 안전': [
-                { name: 'Algorithmic Bias', pron: '알고리듬 바이어스', def: '알고리즘 편향. 특정 그룹에 불공정한 AI 시스템의 경향', category: '윤리' },
-                { name: 'DRM (Digital Rights Management)', pron: '디알엠', def: '디지털 권리 관리. 저작권이 있는 디지털 파일과 AI 모델, 학습 데이터를 보호하는 기술. AI 생성 콘텐츠에 저작권 표시, 무단 복제 및 수정 방지, 모델의 지적재산권 보호에 사용됨', category: '윤리' },
-                { name: 'Fairness', pron: '페어니스', def: '공정성. 모든 사용자에게 공평하게 대우하는 AI 시스템', category: '윤리' },
-                { name: 'Hallucination', pron: '할루시네이션', def: '환각. AI가 거짓 정보를 마치 사실인 것처럼 생성하는 현상', category: '윤리' },
-                { name: 'Privacy', pron: '프라이버시', def: '개인정보보호. 사용자의 개인 정보 보호', category: '윤리' },
-                { name: 'Robustness', pron: '로버스트니스', def: '견고성. 예상치 못한 입력에도 잘 작동하는 모델의 특성', category: '윤리' },
-                { name: 'Safety', pron: '세이프티', def: '안전성. AI 시스템이 해를 끼치지 않아야 함', category: '윤리' },
-                { name: 'Transparency', pron: '트랜스패런시', def: '투명성. AI의 의사결정 과정을 이해할 수 있어야 함', category: '윤리' },
-            ],
-            '운영 & 배포': [
-                { name: 'AIOps', pron: '에이아이옵스', def: 'Artificial Intelligence for IT Operations. IT 운영에 AI를 적용하는 분야. 로그 분석, 이상 탐지, 자동 복구 등으로 IT 인프라의 운영 효율성과 안정성을 향상', category: '운영' },
-                { name: 'AI Operations', pron: '에이아이 오퍼레이션즈', def: 'AI 시스템의 전반적인 운영. AI 모델의 배포, 모니터링, 성능 최적화, 유지보수 등을 포함하는 운영 체계 (MLOps, PinOps를 포괄하는 상위 개념)', category: '운영' },
-                { name: 'CI/CD', pron: '씨아이/씨디', def: 'Continuous Integration/Continuous Deployment. 지속적 통합/배포', category: '운영' },
-                { name: 'Deployment', pron: '디플로이먼트', def: '배포. 모델을 프로덕션 환경에 배포', category: '운영' },
-                { name: 'DevOps', pron: '데브옵스', def: 'DevOps. 개발과 운영을 통합하는 문화 및 방법론', category: '운영' },
-                { name: 'Edge Computing', pron: '엣지 컴퓨팅', def: '엣지 컴퓨팅. 클라우드가 아닌 로컬 기기에서 AI 모델 실행', category: '운영' },
-                { name: 'MLOps', pron: '엠엘옵스', def: 'Machine Learning Operations. ML 운영. ML 시스템의 배포, 모니터링, 관리', category: '운영' },
-                { name: 'PinOps', pron: '핀옵스', def: 'Platform Infrastructure Operations. 개발팀이 셀프서비스로 인프라를 사용할 수 있도록 표준화된 플랫폼을 제공하고 운영하는 분야. DevOps의 진화형으로 개발자 경험(DX) 중심의 인프라 운영을 목표로 함', category: '운영' },
-                { name: 'Model Drift', pron: '모델 드리프트', def: '모델 드리프트. 시간이 지나면서 모델의 성능이 저하되는 현상', category: '운영' },
-                { name: 'Monitoring', pron: '모니터링', def: '모니터링. 배포된 모델의 성능과 건강 상태 지속적 점검', category: '운영' },
-                { name: 'Shadow Deployment', pron: '섀도우 디플로이먼트', def: '섀도우 배포. 새 모델을 배포하되 실제 프로덕션에는 반영하지 않고 테스트', category: '운영' },
-            ]
-        };
+<div class="bar">
+  <div class="wrap bar__in">
+    <label class="field" for="q">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.8 12.8 17 17"/></svg>
+      <input id="q" type="search" autocomplete="off" placeholder="RAG, 추론, 거버넌스, 할루시네이션…">
+      <button class="clear" id="clear" type="button" aria-label="검색어 지우기" hidden>✕</button>
+      <span class="kbd">/</span>
+    </label>
+    <p class="count" id="count" role="status"></p>
+  </div>
+</div>
 
-        let filteredTerms = [];
-        let currentCategory = 'all';
+<main class="wrap">
+  <nav class="rail" id="rail" aria-label="분야 필터"></nav>
+  <p class="legend" id="legend"></p>
+  <div id="results"></div>
+</main>
 
-        // DOM 요소
-        const searchInput = document.getElementById('searchInput');
-        const contentDiv = document.getElementById('content');
-        const statsDiv = document.getElementById('stats');
-        const categoryFilters = document.querySelectorAll('.category-filter');
+<footer class="wrap" id="foot"></footer>
 
-        // 초기 렌더링
-        function render() {
-            contentDiv.innerHTML = '';
-            let totalResults = 0;
+<script>
+const TERMS = [{"n": "AI (Artificial Intelligence)", "p": "에이아이", "d": "인공지능. 학습·추론·인식 등 인간의 지적 능력을 컴퓨터로 구현하는 기술 전반", "c": "AI · 머신러닝 기초", "f": 3, "s": 98}, {"n": "AGI (Artificial General Intelligence)", "p": "에이지아이", "d": "범용 인공지능. 특정 작업이 아니라 인간 수준의 폭넓은 지적 과제를 수행하는 AI. 아직 구현되지 않은 목표 개념", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Machine Learning (ML)", "p": "머신러닝", "d": "기계학습. 명시적으로 규칙을 프로그래밍하지 않고 데이터에서 패턴을 학습하는 방법론", "c": "AI · 머신러닝 기초", "f": 3, "s": 80}, {"n": "Deep Learning", "p": "딥러닝", "d": "심층학습. 여러 층의 신경망을 쌓아 데이터의 복잡한 표현을 자동으로 학습하는 머신러닝의 한 분야", "c": "AI · 머신러닝 기초", "f": 3, "s": 71}, {"n": "Neural Network", "p": "뉴럴 네트워크", "d": "신경망. 뉴런을 본뜬 노드를 층으로 연결해 입력을 출력으로 변환하는 모델 구조", "c": "AI · 머신러닝 기초", "f": 2, "s": 38}, {"n": "Algorithm", "p": "알고리즘", "d": "문제를 해결하기 위한 명확한 단계적 절차", "c": "AI · 머신러닝 기초", "f": 3, "s": 71}, {"n": "Model", "p": "모델", "d": "학습을 통해 얻은 파라미터와 구조의 묶음. 입력을 받아 예측·생성 결과를 내놓는 실체", "c": "AI · 머신러닝 기초", "f": 3, "s": 80}, {"n": "Parameter", "p": "파라미터", "d": "매개변수. 학습 과정에서 조정되는 모델 내부의 가중치. 모델 크기를 나타내는 단위로도 쓰임(7B, 70B 등)", "c": "AI · 머신러닝 기초", "f": 3, "s": 62}, {"n": "Hyperparameter", "p": "하이퍼파라미터", "d": "초매개변수. 학습률·배치 크기처럼 학습 전에 사람이 정하는 설정값", "c": "AI · 머신러닝 기초", "f": 1, "s": 26}, {"n": "Feature", "p": "피처", "d": "특성/특징. 모델이 입력으로 사용하는 데이터의 개별 속성", "c": "AI · 머신러닝 기초", "f": 3, "s": 65}, {"n": "Feature Engineering", "p": "피처 엔지니어링", "d": "특성 공학. 원천 데이터를 모델이 학습하기 좋은 형태의 특성으로 가공하는 작업", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Label", "p": "레이블", "d": "정답값. 지도학습에서 모델이 맞혀야 할 목표 출력", "c": "AI · 머신러닝 기초", "f": 2, "s": 32}, {"n": "Annotation", "p": "어노테이션", "d": "데이터 라벨링. 학습 데이터에 태그·분류 등 정보를 사람이 부여하는 작업", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Dataset", "p": "데이터셋", "d": "학습 또는 평가에 사용되는 데이터 모음", "c": "AI · 머신러닝 기초", "f": 3, "s": 71}, {"n": "Training Data", "p": "트레이닝 데이터", "d": "학습 데이터. 모델의 가중치를 갱신하는 데 사용하는 데이터", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Validation Set", "p": "밸리데이션 셋", "d": "검증 데이터. 학습 중 성능을 점검하고 하이퍼파라미터를 고르는 데 쓰는 별도 데이터", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Test Set", "p": "테스트 셋", "d": "평가 데이터. 학습에 전혀 쓰지 않고 최종 성능만 측정하는 데이터", "c": "AI · 머신러닝 기초", "f": 2, "s": 44}, {"n": "Supervised Learning", "p": "수퍼바이즈드 러닝", "d": "지도학습. 입력과 정답 쌍으로 학습하는 방식", "c": "AI · 머신러닝 기초", "f": 2, "s": 32}, {"n": "Unsupervised Learning", "p": "언수퍼바이즈드 러닝", "d": "비지도학습. 정답 없이 데이터의 구조·패턴만으로 학습하는 방식", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Semi-supervised Learning", "p": "세미 수퍼바이즈드 러닝", "d": "준지도학습. 소량의 라벨 데이터와 대량의 비라벨 데이터를 함께 사용", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Self-supervised Learning", "p": "셀프 수퍼바이즈드 러닝", "d": "자기지도학습. 데이터 자체에서 정답을 만들어 학습. 대규모 언어모델 사전학습의 기본 방식", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Reinforcement Learning (RL)", "p": "리인포스먼트 러닝", "d": "강화학습. 보상을 최대화하는 행동 정책을 시행착오로 학습", "c": "AI · 머신러닝 기초", "f": 2, "s": 32}, {"n": "Classification", "p": "클래시피케이션", "d": "분류. 입력을 정해진 카테고리 중 하나로 구분하는 작업", "c": "AI · 머신러닝 기초", "f": 2, "s": 32}, {"n": "Regression", "p": "리그레션", "d": "회귀. 연속적인 수치를 예측하는 작업", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Clustering", "p": "클러스터링", "d": "군집화. 비슷한 특성의 데이터를 그룹으로 묶는 비지도학습 기법", "c": "AI · 머신러닝 기초", "f": 3, "s": 80}, {"n": "Dimensionality Reduction", "p": "디멘셔널리티 리덕션", "d": "차원 축소. 많은 특성을 정보 손실을 최소화하며 적은 차원으로 압축", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Inference", "p": "인퍼런스", "d": "추론. 학습이 끝난 모델에 입력을 넣어 실제 예측·생성 결과를 얻는 단계. 운영 비용의 대부분을 차지", "c": "AI · 머신러닝 기초", "f": 3, "s": 80}, {"n": "Training", "p": "트레이닝", "d": "학습. 데이터를 반복 투입해 모델의 가중치를 갱신하는 단계", "c": "AI · 머신러닝 기초", "f": 3, "s": 71}, {"n": "Pre-training", "p": "프리트레이닝", "d": "사전학습. 대규모 범용 데이터로 모델의 기본 능력을 먼저 확보하는 단계", "c": "AI · 머신러닝 기초", "f": 1, "s": 26}, {"n": "Transfer Learning", "p": "트랜스퍼 러닝", "d": "전이학습. 한 작업에서 학습한 모델을 다른 작업에 재활용", "c": "AI · 머신러닝 기초", "f": 1, "s": 26}, {"n": "Federated Learning", "p": "페더레이티드 러닝", "d": "연합학습. 데이터를 중앙에 모으지 않고 분산된 기기에서 학습해 프라이버시를 보호", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Ensemble", "p": "앙상블", "d": "여러 모델의 예측을 결합해 단일 모델보다 나은 성능을 얻는 기법", "c": "AI · 머신러닝 기초", "f": 2, "s": 35}, {"n": "Bias", "p": "바이어스", "d": "편향. 모델이 특정 방향으로 치우친 경향. 수학적 편향(절편)과 윤리적 편향은 구분해서 씀", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Variance", "p": "배리언스", "d": "분산. 학습 데이터가 바뀔 때 모델 예측이 흔들리는 정도", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "NLP (Natural Language Processing)", "p": "엔엘피", "d": "자연어 처리. 사람의 언어를 컴퓨터가 이해·생성하도록 다루는 분야", "c": "AI · 머신러닝 기초", "f": 2, "s": 32}, {"n": "Computer Vision", "p": "컴퓨터 비전", "d": "이미지·영상을 해석하는 AI 분야", "c": "AI · 머신러닝 기초", "f": 2, "s": 32}, {"n": "Speech Recognition (STT)", "p": "스피치 레커그니션", "d": "음성 인식. 말소리를 텍스트로 변환(Speech-to-Text)", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "TTS (Text-to-Speech)", "p": "티티에스", "d": "음성 합성. 텍스트를 사람 목소리로 변환", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Recommendation System", "p": "레커멘데이션 시스템", "d": "추천 시스템. 사용자의 행동·취향을 학습해 적합한 항목을 제시", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}, {"n": "Anomaly Detection", "p": "어노말리 디텍션", "d": "이상 탐지. 정상 패턴에서 벗어난 데이터를 찾아내는 기법. AIOps의 장애 징후 탐지에 사용", "c": "AI · 머신러닝 기초", "f": 2, "s": 44}, {"n": "Transformer", "p": "트랜스포머", "d": "어텐션 메커니즘을 기반으로 한 신경망 아키텍처. 현재 대부분의 언어·비전 모델의 토대", "c": "딥러닝 & 아키텍처", "f": 2, "s": 38}, {"n": "Attention Mechanism", "p": "어텐션 메커니즘", "d": "입력의 어느 부분에 집중할지 가중치로 결정하는 신경망 기법", "c": "딥러닝 & 아키텍처", "f": 2, "s": 32}, {"n": "Self-Attention", "p": "셀프 어텐션", "d": "자기 어텐션. 입력 내 각 위치가 같은 입력의 다른 모든 위치와 맺는 관계를 계산", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "Multi-Head Attention", "p": "멀티헤드 어텐션", "d": "다중 헤드 어텐션. 여러 어텐션을 병렬로 계산해 서로 다른 관계를 동시에 포착", "c": "딥러닝 & 아키텍처", "f": 1, "s": 20}, {"n": "Flash Attention", "p": "플래시 어텐션", "d": "GPU 메모리 접근을 줄여 어텐션 연산을 가속하는 구현 기법. 긴 컨텍스트 처리에 필수적", "c": "딥러닝 & 아키텍처", "f": 1, "s": 20}, {"n": "Encoder", "p": "인코더", "d": "입력 데이터를 압축된 내부 표현으로 변환하는 신경망 부분", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "Decoder", "p": "디코더", "d": "내부 표현을 다시 사람이 읽을 수 있는 출력으로 변환하는 신경망 부분", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "Encoder-Decoder", "p": "인코더 디코더", "d": "입력을 인코딩한 뒤 디코딩해 출력하는 구조. 번역·요약 과제에 적합", "c": "딥러닝 & 아키텍처", "f": 1, "s": 20}, {"n": "CNN (Convolutional Neural Network)", "p": "씨엔엔", "d": "합성곱 신경망. 필터를 훑어가며 지역적 특징을 추출하는 구조로 이미지 처리에 최적화", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "RNN (Recurrent Neural Network)", "p": "알엔엔", "d": "순환 신경망. 이전 상태를 다음 계산에 넘기며 순서가 있는 데이터를 처리", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "LSTM", "p": "엘에스티엠", "d": "Long Short-Term Memory. 장기 의존성을 기억하도록 게이트를 둔 RNN 변형", "c": "딥러닝 & 아키텍처", "f": 1, "s": 20}, {"n": "GAN (Generative Adversarial Network)", "p": "갠", "d": "생성적 적대 신경망. 생성자와 판별자가 경쟁하며 사실적인 데이터를 만들어내는 구조", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "AutoEncoder", "p": "오토인코더", "d": "입력을 압축했다가 복원하도록 학습시켜 핵심 표현을 얻는 비지도 모델", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "Diffusion Model", "p": "디퓨전 모델", "d": "확산 모델. 노이즈에서 시작해 점진적으로 제거하며 이미지를 생성", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "Vision Transformer (ViT)", "p": "비전 트랜스포머", "d": "이미지를 패치 단위로 쪼개 토큰처럼 처리하는 트랜스포머", "c": "딥러닝 & 아키텍처", "f": 1, "s": 20}, {"n": "BERT", "p": "버트", "d": "Bidirectional Encoder Representations from Transformers. 문맥을 양방향으로 읽는 인코더 기반 언어모델", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "GPT", "p": "지피티", "d": "Generative Pre-trained Transformer. 다음 토큰을 예측하도록 사전학습된 디코더 기반 생성 모델", "c": "딥러닝 & 아키텍처", "f": 2, "s": 56}, {"n": "MoE (Mixture of Experts)", "p": "믹스처 오브 엑스퍼츠", "d": "전문가 혼합. 여러 전문 신경망 중 입력에 맞는 일부만 활성화해 연산량을 줄이는 구조", "c": "딥러닝 & 아키텍처", "f": 1, "s": 20}, {"n": "Embedding", "p": "임베딩", "d": "텍스트·이미지 등을 의미가 보존된 고차원 수치 벡터로 변환한 표현", "c": "딥러닝 & 아키텍처", "f": 3, "s": 65}, {"n": "Vector", "p": "벡터", "d": "데이터를 수치 배열로 표현한 것. 임베딩 결과물이자 유사도 검색의 단위", "c": "딥러닝 & 아키텍처", "f": 2, "s": 53}, {"n": "Tokenization", "p": "토크나이제이션", "d": "토큰화. 텍스트를 모델이 처리하는 최소 단위(토큰)로 분할", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "Token", "p": "토큰", "d": "모델이 한 번에 다루는 텍스트 최소 단위. 영어는 대략 단어의 0.75개, 한국어는 글자 단위에 가까움. 과금·컨텍스트 산정 기준", "c": "딥러닝 & 아키텍처", "f": 3, "s": 62}, {"n": "Positional Encoding", "p": "포지셔널 인코딩", "d": "위치 인코딩. 토큰의 순서 정보를 벡터에 더해 모델이 순서를 인식하게 함", "c": "딥러닝 & 아키텍처", "f": 1, "s": 20}, {"n": "Activation Function", "p": "액티베이션 펑션", "d": "활성화 함수. 신경망에 비선형성을 부여하는 함수(ReLU, GELU 등)", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "Softmax", "p": "소프트맥스", "d": "출력값들을 합이 1인 확률 분포로 변환하는 함수", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "Layer", "p": "레이어", "d": "층. 신경망을 구성하는 연산 단위. 층을 깊게 쌓을수록 표현력이 커짐", "c": "딥러닝 & 아키텍처", "f": 3, "s": 77}, {"n": "Residual Connection", "p": "레지듀얼 커넥션", "d": "잔차 연결. 층의 입력을 출력에 더해 깊은 신경망의 학습을 안정화", "c": "딥러닝 & 아키텍처", "f": 1, "s": 20}, {"n": "Context Window", "p": "컨텍스트 윈도우", "d": "모델이 한 번에 처리할 수 있는 최대 토큰 수. 입력과 출력을 합산해 계산", "c": "딥러닝 & 아키텍처", "f": 2, "s": 32}, {"n": "Long Context", "p": "롱 컨텍스트", "d": "수십만~수백만 토큰의 긴 입력을 한 번에 처리하는 능력", "c": "딥러닝 & 아키텍처", "f": 1, "s": 20}, {"n": "KV Cache", "p": "케이브이 캐시", "d": "생성 중 이미 계산한 키·값을 저장해 재계산을 피하는 기법. 추론 속도와 GPU 메모리를 좌우", "c": "딥러닝 & 아키텍처", "f": 2, "s": 35}, {"n": "Gradient Descent", "p": "그래디언트 디센트", "d": "경사하강법. 손실이 줄어드는 방향으로 파라미터를 반복 갱신해 최적값을 찾는 기본 알고리즘", "c": "학습 & 최적화", "f": 2, "s": 32}, {"n": "Backpropagation", "p": "백프로퍼게이션", "d": "역전파. 출력의 오차를 입력 방향으로 거슬러 전파하며 각 가중치의 기울기를 계산", "c": "학습 & 최적화", "f": 2, "s": 32}, {"n": "Loss Function", "p": "로스 펑션", "d": "손실 함수. 예측과 정답의 차이를 수치화해 학습의 방향을 정하는 기준", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Learning Rate", "p": "러닝 레이트", "d": "학습률. 한 번에 파라미터를 얼마나 크게 움직일지 정하는 값. 너무 크면 발산, 작으면 수렴이 느림", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Adam", "p": "아담", "d": "적응형 학습률을 사용하는 최적화 알고리즘. 대부분의 딥러닝에서 기본값으로 쓰임", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Optimizer", "p": "옵티마이저", "d": "최적화 기법. 기울기를 어떻게 파라미터 갱신에 반영할지 정하는 알고리즘", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Epoch", "p": "에포크", "d": "전체 학습 데이터를 한 번 모두 학습하는 단위", "c": "학습 & 최적화", "f": 3, "s": 83}, {"n": "Batch", "p": "배치", "d": "한 번의 갱신에 함께 처리하는 데이터 묶음. 그 크기를 배치 크기라 함", "c": "학습 & 최적화", "f": 2, "s": 47}, {"n": "Mini-batch", "p": "미니배치", "d": "전체 데이터를 작은 묶음으로 나눠 순차적으로 학습하는 방식", "c": "학습 & 최적화", "f": 1, "s": 20}, {"n": "Iteration", "p": "이터레이션", "d": "배치 하나를 처리해 파라미터를 한 번 갱신하는 단위", "c": "학습 & 최적화", "f": 1, "s": 20}, {"n": "Convergence", "p": "컨버전스", "d": "수렴. 학습이 진행되며 손실이 더 이상 줄지 않고 안정 상태에 도달하는 것", "c": "학습 & 최적화", "f": 2, "s": 35}, {"n": "Overfitting", "p": "오버피팅", "d": "과적합. 학습 데이터에만 과하게 맞춰져 새로운 데이터에서 성능이 떨어지는 현상", "c": "학습 & 최적화", "f": 2, "s": 32}, {"n": "Underfitting", "p": "언더피팅", "d": "과소적합. 모델이 너무 단순해 학습 데이터의 패턴조차 제대로 못 잡는 상태", "c": "학습 & 최적화", "f": 1, "s": 20}, {"n": "Regularization", "p": "레귤러라이제이션", "d": "정규화. 과적합을 막기 위해 손실 함수에 제약을 더하는 기법", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Dropout", "p": "드롭아웃", "d": "학습 중 일부 뉴런을 무작위로 비활성화해 과적합을 억제하는 정규화 기법", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Batch Normalization", "p": "배치 노멀라이제이션", "d": "배치 정규화. 각 층의 입력 분포를 정규화해 학습을 안정화하고 가속", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Early Stopping", "p": "얼리 스토핑", "d": "조기 중단. 검증 성능이 더 이상 개선되지 않으면 학습을 멈춰 과적합과 낭비를 줄임", "c": "학습 & 최적화", "f": 2, "s": 41}, {"n": "Augmentation", "p": "어그멘테이션", "d": "데이터 증강. 기존 데이터를 변형해 학습 데이터를 늘리는 기법", "c": "학습 & 최적화", "f": 1, "s": 20}, {"n": "Fine-tuning", "p": "파인튜닝", "d": "미세조정. 사전학습된 모델을 특정 작업·도메인 데이터로 추가 학습", "c": "학습 & 최적화", "f": 2, "s": 56}, {"n": "LoRA (Low-Rank Adaptation)", "p": "로라", "d": "저랭크 적응. 원본 가중치는 두고 작은 보조 행렬만 학습해 비용을 크게 줄이는 미세조정 기법", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "PEFT", "p": "피이에프티", "d": "Parameter-Efficient Fine-Tuning. 전체 파라미터 대신 일부만 학습하는 효율적 미세조정 기법군", "c": "학습 & 최적화", "f": 1, "s": 20}, {"n": "RLHF", "p": "알엘에이치에프", "d": "Reinforcement Learning from Human Feedback. 사람의 선호 평가를 보상 신호로 삼아 모델을 정렬하는 학습", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "DPO (Direct Preference Optimization)", "p": "디피오", "d": "직접 선호 최적화. 별도 보상 모델 없이 선호 데이터로 바로 정렬하는 RLHF 대안", "c": "학습 & 최적화", "f": 1, "s": 20}, {"n": "Instruction Tuning", "p": "인스트럭션 튜닝", "d": "명령어 튜닝. 지시문-응답 쌍으로 학습시켜 사용자의 명령을 잘 따르게 만드는 과정", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Distillation", "p": "디스틸레이션", "d": "지식 증류. 큰 교사 모델의 출력을 작은 학생 모델이 모방하도록 학습시켜 경량화", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Quantization", "p": "퀀타이제이션", "d": "양자화. 가중치를 FP16·INT8·INT4 등 낮은 정밀도로 변환해 메모리와 추론 비용을 줄이는 기법", "c": "학습 & 최적화", "f": 2, "s": 32}, {"n": "Pruning", "p": "프루닝", "d": "가지치기. 기여도가 낮은 가중치나 뉴런을 제거해 모델을 경량화", "c": "학습 & 최적화", "f": 1, "s": 20}, {"n": "Checkpoint", "p": "체크포인트", "d": "학습 중간 상태를 저장한 파일. 장애 발생 시 처음부터 다시 학습하지 않고 재개하는 근거", "c": "학습 & 최적화", "f": 3, "s": 77}, {"n": "Distributed Training", "p": "디스트리뷰티드 트레이닝", "d": "분산 학습. 여러 GPU·노드에 걸쳐 하나의 모델을 학습", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Data Parallelism", "p": "데이터 패럴리즘", "d": "데이터 병렬화. 같은 모델을 여러 장치에 복제하고 데이터를 나눠 학습", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Model Parallelism", "p": "모델 패럴리즘", "d": "모델 병렬화. 모델 자체를 쪼개 여러 장치에 나눠 올리는 방식. 단일 GPU에 안 들어가는 대형 모델에 필수", "c": "학습 & 최적화", "f": 1, "s": 26}, {"n": "Pipeline Parallelism", "p": "파이프라인 패럴리즘", "d": "모델의 층을 구간별로 나눠 장치에 배치하고 흐름을 겹쳐 처리", "c": "학습 & 최적화", "f": 1, "s": 20}, {"n": "Gradient Accumulation", "p": "그래디언트 어큐뮬레이션", "d": "기울기 누적. 작은 배치를 여러 번 모아 큰 배치처럼 갱신해 메모리 제약을 우회", "c": "학습 & 최적화", "f": 1, "s": 20}, {"n": "Mixed Precision", "p": "믹스드 프리시전", "d": "혼합 정밀도. FP16/BF16과 FP32를 섞어 속도와 메모리를 개선하면서 정확도를 유지", "c": "학습 & 최적화", "f": 1, "s": 20}, {"n": "Generative AI", "p": "제너레이티브 에이아이", "d": "생성형 AI. 텍스트·이미지·음성·코드 등 새로운 콘텐츠를 만들어내는 AI", "c": "생성형 AI & LLM", "f": 2, "s": 38}, {"n": "LLM (Large Language Model)", "p": "엘엘엠", "d": "대규모 언어모델. 방대한 텍스트로 사전학습해 언어를 이해·생성하는 대형 모델", "c": "생성형 AI & LLM", "f": 3, "s": 89}, {"n": "sLLM (Small Language Model)", "p": "에스엘엘엠", "d": "경량 언어모델. 파라미터를 줄여 온프레미스·엣지에서도 운용 가능한 소형 모델", "c": "생성형 AI & LLM", "f": 2, "s": 53}, {"n": "Foundation Model", "p": "파운데이션 모델", "d": "기반 모델. 대규모 범용 사전학습을 거쳐 다양한 과제에 전용 가능한 토대 모델", "c": "생성형 AI & LLM", "f": 3, "s": 83}, {"n": "Frontier Model", "p": "프론티어 모델", "d": "최전선 모델. 당대 최고 성능 구간에 있는 대형 모델. 규제 논의에서 별도 범주로 다뤄짐", "c": "생성형 AI & LLM", "f": 2, "s": 35}, {"n": "Open-weight Model", "p": "오픈 웨이트 모델", "d": "가중치가 공개돼 직접 내려받아 운용할 수 있는 모델. 설치형·폐쇄망 구축의 전제", "c": "생성형 AI & LLM", "f": 2, "s": 32}, {"n": "Autoregressive Model", "p": "오토리그레시브 모델", "d": "자기회귀 모델. 이전 토큰을 근거로 다음 토큰을 하나씩 순차 생성", "c": "생성형 AI & LLM", "f": 1, "s": 20}, {"n": "Multimodal Model", "p": "멀티모달 모델", "d": "텍스트·이미지·음성 등 여러 형태의 입력을 함께 처리하는 모델", "c": "생성형 AI & LLM", "f": 2, "s": 32}, {"n": "Reasoning Model", "p": "리즈닝 모델", "d": "추론 모델. 답하기 전에 내부적으로 사고 과정을 길게 전개해 복잡한 문제 해결력을 높인 모델", "c": "생성형 AI & LLM", "f": 2, "s": 32}, {"n": "Test-time Compute", "p": "테스트 타임 컴퓨트", "d": "추론 시 연산. 학습이 아니라 답변 생성 시점에 연산을 더 써서 성능을 끌어올리는 접근", "c": "생성형 AI & LLM", "f": 1, "s": 12}, {"n": "Alignment", "p": "얼라인먼트", "d": "정렬. 모델의 출력이 인간의 가치·의도와 어긋나지 않도록 맞추는 과정", "c": "생성형 AI & LLM", "f": 2, "s": 32}, {"n": "Constitutional AI", "p": "컨스티튜셔널 에이아이", "d": "헌법적 AI. 명시된 원칙 문서를 기준으로 모델이 스스로 출력을 교정하게 하는 정렬 방법론", "c": "생성형 AI & LLM", "f": 1, "s": 20}, {"n": "Hallucination", "p": "할루시네이션", "d": "환각. 사실이 아닌 내용을 사실인 것처럼 자신 있게 생성하는 현상", "c": "생성형 AI & LLM", "f": 2, "s": 38}, {"n": "Grounding", "p": "그라운딩", "d": "근거 연결. 생성 결과를 검증 가능한 실제 지식·출처에 결부시켜 환각을 줄이는 것", "c": "생성형 AI & LLM", "f": 2, "s": 32}, {"n": "Temperature", "p": "템퍼러처", "d": "생성의 무작위성을 조절하는 값. 낮으면 결정적·반복적, 높으면 다양하지만 불안정", "c": "생성형 AI & LLM", "f": 1, "s": 26}, {"n": "Top-p (Nucleus Sampling)", "p": "탑 피", "d": "누적 확률 p 이내의 후보에서만 토큰을 뽑는 샘플링 방식", "c": "생성형 AI & LLM", "f": 1, "s": 20}, {"n": "Top-k", "p": "탑 케이", "d": "확률 상위 k개 후보 중에서만 토큰을 뽑는 샘플링 방식", "c": "생성형 AI & LLM", "f": 1, "s": 20}, {"n": "Stop Sequence", "p": "스톱 시퀀스", "d": "지정한 문자열이 나오면 생성을 중단시키는 설정", "c": "생성형 AI & LLM", "f": 1, "s": 12}, {"n": "System Prompt", "p": "시스템 프롬프트", "d": "모델의 역할·규칙·제약을 미리 지정하는 최상위 지시문", "c": "생성형 AI & LLM", "f": 1, "s": 26}, {"n": "Context Engineering", "p": "컨텍스트 엔지니어링", "d": "모델에 넣을 맥락(지시·문서·이력·도구 정의)을 설계·관리하는 작업. 프롬프트 엔지니어링의 확장 개념", "c": "생성형 AI & LLM", "f": 1, "s": 20}, {"n": "Structured Output", "p": "스트럭처드 아웃풋", "d": "구조화 출력. JSON 등 정해진 스키마로만 응답하게 강제해 후속 시스템과 연동", "c": "생성형 AI & LLM", "f": 1, "s": 26}, {"n": "Function Calling", "p": "펑션 콜링", "d": "함수 호출. 모델이 정해진 함수·API를 직접 호출하도록 하는 기능. 에이전트의 기본 동작 방식", "c": "생성형 AI & LLM", "f": 2, "s": 47}, {"n": "Streaming", "p": "스트리밍", "d": "생성된 토큰을 완성 전에 순차 전달해 체감 응답 속도를 높이는 방식", "c": "생성형 AI & LLM", "f": 2, "s": 41}, {"n": "Prompt", "p": "프롬프트", "d": "모델에 입력하는 지시문이나 질문", "c": "생성형 AI & LLM", "f": 3, "s": 62}, {"n": "Prompt Engineering", "p": "프롬프트 엔지니어링", "d": "원하는 출력을 얻기 위해 입력을 설계하는 기법", "c": "생성형 AI & LLM", "f": 2, "s": 32}, {"n": "Chain of Thought (CoT)", "p": "체인 오브 소트", "d": "사고의 사슬. 모델이 단계적 추론 과정을 거치도록 유도하는 프롬프트 기법", "c": "생성형 AI & LLM", "f": 1, "s": 26}, {"n": "Few-shot Learning", "p": "퓨샷 러닝", "d": "소수 예시 학습. 프롬프트에 예시 몇 개를 넣어 원하는 형식·방식을 유도", "c": "생성형 AI & LLM", "f": 1, "s": 26}, {"n": "Zero-shot Learning", "p": "제로샷 러닝", "d": "예시 없이 지시만으로 처음 보는 과제를 수행하게 하는 방식", "c": "생성형 AI & LLM", "f": 1, "s": 26}, {"n": "ReAct", "p": "리액트", "d": "Reasoning + Acting. 추론과 도구 실행을 번갈아 수행하는 에이전트 프롬프트 패턴", "c": "생성형 AI & LLM", "f": 1, "s": 20}, {"n": "Prompt Injection", "p": "프롬프트 인젝션", "d": "외부 입력에 악성 지시를 숨겨 모델의 원래 지침을 가로채는 공격", "c": "생성형 AI & LLM", "f": 1, "s": 20}, {"n": "Jailbreak", "p": "제일브레이크", "d": "탈옥. 안전장치를 우회해 금지된 출력을 끌어내려는 시도", "c": "생성형 AI & LLM", "f": 1, "s": 20}, {"n": "Context Rot", "p": "컨텍스트 로트", "d": "컨텍스트가 길어질수록 중간 정보의 활용도가 떨어지는 현상", "c": "생성형 AI & LLM", "f": 1, "s": 12}, {"n": "RAG (Retrieval-Augmented Generation)", "p": "래그", "d": "검색증강생성. 외부 지식베이스에서 관련 정보를 찾아 프롬프트에 넣고 답하게 해 정확도를 높이고 환각을 줄이는 구조", "c": "RAG & 검색", "f": 3, "s": 80}, {"n": "Retrieval", "p": "리트리벌", "d": "검색. 질의에 관련된 문서·청크를 지식베이스에서 찾아오는 단계", "c": "RAG & 검색", "f": 2, "s": 41}, {"n": "Chunking", "p": "청킹", "d": "긴 문서를 임베딩·검색에 적합한 크기의 단위로 분할하는 기법. 청크 크기와 겹침 설정이 검색 품질을 좌우", "c": "RAG & 검색", "f": 2, "s": 32}, {"n": "Vector Database", "p": "벡터 데이터베이스", "d": "임베딩 벡터를 저장하고 유사도로 검색하는 데이터베이스. RAG의 핵심 저장소", "c": "RAG & 검색", "f": 2, "s": 32}, {"n": "Vector Search", "p": "벡터 서치", "d": "의미가 가까운 벡터를 찾는 검색. 단어가 달라도 뜻이 비슷하면 찾아냄", "c": "RAG & 검색", "f": 1, "s": 26}, {"n": "Semantic Search", "p": "시맨틱 서치", "d": "의미 기반 검색. 키워드 일치가 아니라 의미의 유사성으로 결과를 찾는 방식", "c": "RAG & 검색", "f": 1, "s": 26}, {"n": "Keyword Search (BM25)", "p": "키워드 서치", "d": "단어 일치 기반 전통적 검색. 고유명사·코드·품번에 강함", "c": "RAG & 검색", "f": 1, "s": 20}, {"n": "Hybrid Search", "p": "하이브리드 서치", "d": "벡터 검색과 키워드 검색을 결합해 양쪽의 약점을 보완하는 검색 전략", "c": "RAG & 검색", "f": 2, "s": 50}, {"n": "ReRanking", "p": "리랭킹", "d": "재순위화. 1차 검색 결과를 더 정밀한 모델로 다시 정렬해 상위 정확도를 높이는 단계", "c": "RAG & 검색", "f": 2, "s": 50}, {"n": "HyDE", "p": "하이디이", "d": "Hypothetical Document Embeddings. 가상의 답변을 먼저 생성해 그 임베딩으로 검색 품질을 높이는 기법", "c": "RAG & 검색", "f": 2, "s": 36}, {"n": "Query Expansion", "p": "쿼리 익스팬션", "d": "질의 확장. 원 질문을 여러 변형으로 늘려 검색 누락을 줄이는 기법", "c": "RAG & 검색", "f": 1, "s": 20}, {"n": "Cosine Similarity", "p": "코사인 유사도", "d": "두 벡터가 이루는 각도로 유사도를 재는 척도. 벡터 검색의 기본 거리 함수", "c": "RAG & 검색", "f": 1, "s": 20}, {"n": "ANN (Approximate Nearest Neighbor)", "p": "에이엔엔", "d": "근사 최근접 이웃. 정확도를 조금 양보하고 대규모 벡터 검색을 빠르게 수행하는 알고리즘", "c": "RAG & 검색", "f": 1, "s": 12}, {"n": "HNSW", "p": "에이치엔에스더블유", "d": "계층적 그래프로 근사 최근접 이웃을 탐색하는 대표적인 벡터 인덱스 구조", "c": "RAG & 검색", "f": 1, "s": 12}, {"n": "Index", "p": "인덱스", "d": "검색을 빠르게 하기 위해 데이터를 미리 구조화해 둔 것", "c": "RAG & 검색", "f": 2, "s": 50}, {"n": "Context Stuffing", "p": "컨텍스트 스터핑", "d": "검색 결과를 프롬프트에 넣어 모델에 전달하는 것. 넣는 양과 순서가 품질을 좌우", "c": "RAG & 검색", "f": 1, "s": 12}, {"n": "Citation", "p": "사이테이션", "d": "출처 표기. 생성된 답변이 어느 문서의 어느 부분에 근거했는지 제시하는 기능", "c": "RAG & 검색", "f": 1, "s": 12}, {"n": "GraphRAG", "p": "그래프 래그", "d": "지식 그래프 구조를 활용해 개체 간 관계까지 고려하는 검색증강생성 방식", "c": "RAG & 검색", "f": 1, "s": 20}, {"n": "Ontology", "p": "온톨로지", "d": "개체와 개체 간 관계를 형식적으로 정의한 지식 체계. 도메인 용어를 기계가 해석 가능하게 만듦", "c": "RAG & 검색", "f": 3, "s": 77}, {"n": "Knowledge Graph", "p": "날리지 그래프", "d": "지식 그래프. 개체를 노드, 관계를 엣지로 표현한 그래프형 지식베이스", "c": "RAG & 검색", "f": 1, "s": 26}, {"n": "Graph DB", "p": "그래프 디비", "d": "노드와 관계를 일급 객체로 저장·질의하는 데이터베이스", "c": "RAG & 검색", "f": 2, "s": 53}, {"n": "AI OCR", "p": "에이아이 오씨아르", "d": "AI 기반 문서 인식. 스캔본·이미지·표를 구조화된 텍스트로 변환해 AI가 활용 가능한 형태로 만듦", "c": "RAG & 검색", "f": 3, "s": 68}, {"n": "Semantic Parsing", "p": "시맨틱 파싱", "d": "의미 구문 분석. 표·도형·레이아웃을 포함한 문서를 의미 단위로 해석하는 처리", "c": "RAG & 검색", "f": 2, "s": 44}, {"n": "Text-to-SQL", "p": "텍스트 투 에스큐엘", "d": "자연어 질문을 SQL 질의로 변환해 데이터베이스에서 직접 답을 끌어오는 기술", "c": "RAG & 검색", "f": 2, "s": 59}, {"n": "Golden Test Set", "p": "골든 테스트 셋", "d": "정답이 확정된 평가 질의 묶음. 운영 중 회귀 테스트의 기준이 됨", "c": "RAG & 검색", "f": 2, "s": 36}, {"n": "AI Agent", "p": "에이아이 에이전트", "d": "목표를 받아 스스로 계획을 세우고 도구를 호출해 여러 단계를 실행하는 AI 시스템", "c": "AI Agent & 오케스트레이션", "f": 3, "s": 98}, {"n": "Agentic AI", "p": "에이전틱 에이아이", "d": "단발 응답이 아니라 자율적으로 판단·실행·반복하는 성질의 AI", "c": "AI Agent & 오케스트레이션", "f": 2, "s": 56}, {"n": "Multi-Agent System", "p": "멀티 에이전트 시스템", "d": "역할이 다른 여러 에이전트가 협업해 하나의 과제를 처리하는 구조", "c": "AI Agent & 오케스트레이션", "f": 1, "s": 26}, {"n": "Agent Orchestration", "p": "에이전트 오케스트레이션", "d": "여러 에이전트와 도구의 실행 순서·분기·상태를 조율하는 제어 계층", "c": "AI Agent & 오케스트레이션", "f": 2, "s": 50}, {"n": "Tool Use", "p": "툴 유즈", "d": "도구 사용. 모델이 외부 API·검색·코드 실행 등을 호출해 능력을 확장하는 것", "c": "AI Agent & 오케스트레이션", "f": 1, "s": 26}, {"n": "MCP (Model Context Protocol)", "p": "엠씨피", "d": "모델과 외부 데이터·도구를 연결하는 개방형 표준 프로토콜. 연동을 매번 개별 구현하지 않게 해 줌", "c": "AI Agent & 오케스트레이션", "f": 2, "s": 56}, {"n": "LangGraph", "p": "랭그래프", "d": "상태를 가진 그래프 형태로 에이전트 워크플로를 구성하는 오케스트레이션 프레임워크", "c": "AI Agent & 오케스트레이션", "f": 2, "s": 44}, {"n": "Code Interpreter", "p": "코드 인터프리터", "d": "모델이 생성한 코드를 격리 환경에서 실제 실행해 계산·분석 결과를 얻는 도구", "c": "AI Agent & 오케스트레이션", "f": 2, "s": 53}, {"n": "Workflow Agent", "p": "워크플로 에이전트", "d": "정해진 업무 절차를 따라 단계별로 작업을 수행하는 에이전트", "c": "AI Agent & 오케스트레이션", "f": 2, "s": 35}, {"n": "Human-in-the-Loop", "p": "휴먼 인 더 루프", "d": "사람 개입. 중요한 판단·실행 직전에 사람의 승인을 거치도록 설계하는 방식", "c": "AI Agent & 오케스트레이션", "f": 2, "s": 50}, {"n": "Guardrail", "p": "가드레일", "d": "모델의 입력과 출력을 정책에 맞게 검사·차단하는 안전 장치", "c": "AI Agent & 오케스트레이션", "f": 3, "s": 65}, {"n": "Memory", "p": "메모리", "d": "에이전트가 대화·작업 이력을 저장해 다음 실행에 활용하는 구조", "c": "AI Agent & 오케스트레이션", "f": 3, "s": 71}, {"n": "Planning", "p": "플래닝", "d": "계획 수립. 목표를 실행 가능한 하위 단계로 분해하는 에이전트의 사고 과정", "c": "AI Agent & 오케스트레이션", "f": 1, "s": 20}, {"n": "APA (Agentic Process Automation)", "p": "에이피에이", "d": "에이전트 기반 업무 자동화. 규칙 기반 RPA를 넘어 판단이 필요한 절차까지 자동화", "c": "AI Agent & 오케스트레이션", "f": 1, "s": 27}, {"n": "RPA", "p": "알피에이", "d": "Robotic Process Automation. 정해진 규칙에 따라 반복 업무를 자동 수행하는 소프트웨어", "c": "AI Agent & 오케스트레이션", "f": 2, "s": 35}, {"n": "AgentOps", "p": "에이전트옵스", "d": "에이전트의 배포·모니터링·품질 검증·개선을 체계화한 운영 영역", "c": "AI Agent & 오케스트레이션", "f": 3, "s": 62}, {"n": "Trace", "p": "트레이스", "d": "에이전트가 어떤 판단과 호출을 거쳤는지 단계별로 기록한 실행 이력", "c": "AI Agent & 오케스트레이션", "f": 1, "s": 20}, {"n": "Evaluation (Evals)", "p": "이밸류에이션", "d": "평가. 모델·에이전트의 출력 품질을 정해진 기준과 데이터로 측정하는 체계", "c": "AI Agent & 오케스트레이션", "f": 1, "s": 26}, {"n": "Regression Test", "p": "리그레션 테스트", "d": "회귀 테스트. 변경 후에도 기존 성능이 유지되는지 자동 검증하는 절차", "c": "AI Agent & 오케스트레이션", "f": 1, "s": 20}, {"n": "GPU", "p": "지피유", "d": "Graphics Processing Unit. 대량의 병렬 연산에 특화된 프로세서. AI 학습·추론의 핵심 자원", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 98}, {"n": "NPU", "p": "엔피유", "d": "Neural Processing Unit. 신경망 연산에 특화 설계된 전용 가속기. 전력 대비 효율이 높음", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 86}, {"n": "TPU", "p": "티피유", "d": "Tensor Processing Unit. 구글이 설계한 AI 전용 가속기", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 50}, {"n": "CPU", "p": "씨피유", "d": "Central Processing Unit. 범용 연산을 담당하는 중앙 처리 장치", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 78}, {"n": "Accelerator", "p": "액셀러레이터", "d": "가속기. GPU·NPU 등 특정 연산을 빠르게 처리하는 전용 하드웨어", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 59}, {"n": "H100 / H200", "p": "에이치백 에이치이백", "d": "엔비디아의 데이터센터급 GPU. H200은 메모리 용량과 대역폭을 키운 후속 모델", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 71}, {"n": "HBM", "p": "에이치비엠", "d": "High Bandwidth Memory. GPU에 적층해 붙이는 고대역폭 메모리. 대형 모델 처리량을 좌우", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 41}, {"n": "VRAM", "p": "브이램", "d": "GPU에 내장된 메모리. 모델 크기와 배치 크기의 상한을 결정", "c": "AI 인프라 & 하드웨어", "f": 1, "s": 26}, {"n": "CUDA", "p": "쿠다", "d": "엔비디아 GPU에서 병렬 연산을 수행하기 위한 프로그래밍 플랫폼", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 50}, {"n": "DCGM", "p": "디씨지엠", "d": "Data Center GPU Manager. 엔비디아 GPU의 상태·온도·오류를 수집하는 관리 도구", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 62}, {"n": "MIG (Multi-Instance GPU)", "p": "미그", "d": "하나의 GPU를 격리된 여러 인스턴스로 분할해 동시 사용하는 기술", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 44}, {"n": "GPU Cluster", "p": "지피유 클러스터", "d": "다수의 GPU 서버를 네트워크로 묶어 하나의 연산 자원으로 운용하는 집합", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 50}, {"n": "GPU Farm", "p": "지피유 팜", "d": "대규모 GPU 자원을 집약해 운영하는 설비", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 62}, {"n": "GPUaaS", "p": "지피유 에이에이에스", "d": "GPU as a Service. GPU 자원을 필요한 만큼 할당해 서비스 형태로 제공하는 모델", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 86}, {"n": "AIDC (AI Data Center)", "p": "에이아이 디씨", "d": "AI 연산에 특화된 데이터센터. 고밀도 전력과 냉각, 고속 네트워크가 전제", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 80}, {"n": "InfiniBand", "p": "인피니밴드", "d": "지연을 최소화한 초고속 인터커넥트. 다중 노드 분산 학습의 통신 병목을 줄임", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 68}, {"n": "RDMA", "p": "알디엠에이", "d": "Remote Direct Memory Access. CPU를 거치지 않고 원격 메모리에 직접 접근하는 통신 방식", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 59}, {"n": "NVLink", "p": "엔브이링크", "d": "GPU 간을 직접 고속 연결하는 엔비디아 인터커넥트 규격", "c": "AI 인프라 & 하드웨어", "f": 1, "s": 20}, {"n": "GDS (GPUDirect Storage)", "p": "지디에스", "d": "스토리지에서 GPU 메모리로 데이터를 직접 전송해 CPU 경유를 없애는 기술", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 45}, {"n": "FLOPs", "p": "플롭스", "d": "초당 부동소수점 연산 수. 연산 성능을 나타내는 단위", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 62}, {"n": "Node", "p": "노드", "d": "분산 환경에서 하나의 서버 단위. 쿠버네티스에서는 컨테이너가 실행되는 호스트", "c": "AI 인프라 & 하드웨어", "f": 3, "s": 77}, {"n": "Bare Metal", "p": "베어메탈", "d": "가상화 계층 없이 물리 서버를 직접 사용하는 방식. 성능 손실이 없음", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 53}, {"n": "HPC", "p": "에이치피씨", "d": "High Performance Computing. 대규모 과학·공학 연산을 위한 고성능 컴퓨팅 환경", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 53}, {"n": "Slurm", "p": "슬럼", "d": "HPC 환경에서 널리 쓰이는 작업 스케줄러. GPU 배치 작업 관리에도 사용", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 45}, {"n": "Edge Computing", "p": "엣지 컴퓨팅", "d": "클라우드가 아닌 현장 기기에서 연산을 수행해 지연과 데이터 유출을 줄이는 방식", "c": "AI 인프라 & 하드웨어", "f": 1, "s": 26}, {"n": "Sovereign AI", "p": "소버린 에이아이", "d": "AI 주권. 국가·기업이 데이터와 모델, 인프라를 외부에 의존하지 않고 자체 통제하는 전략", "c": "AI 인프라 & 하드웨어", "f": 2, "s": 44}, {"n": "Cloud Native", "p": "클라우드 네이티브", "d": "컨테이너·마이크로서비스·선언적 운영을 전제로 설계·배포하는 방식", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 89}, {"n": "Kubernetes (K8s)", "p": "쿠버네티스", "d": "컨테이너의 배포·확장·복구를 자동화하는 오케스트레이션 플랫폼. AI 인프라의 사실상 표준", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 98}, {"n": "Container", "p": "컨테이너", "d": "애플리케이션과 실행 환경을 함께 묶어 어디서든 동일하게 실행되게 한 패키지", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 83}, {"n": "Pod", "p": "파드", "d": "쿠버네티스가 배포하는 최소 실행 단위. 하나 이상의 컨테이너 묶음", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 77}, {"n": "Namespace", "p": "네임스페이스", "d": "하나의 클러스터를 논리적으로 분리하는 단위. 팀·환경별 격리에 사용", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 59}, {"n": "DaemonSet", "p": "데몬셋", "d": "모든 노드에 동일한 파드를 하나씩 배치하는 쿠버네티스 리소스. 모니터링 에이전트 배포에 사용", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 71}, {"n": "CRD (Custom Resource Definition)", "p": "씨알디", "d": "쿠버네티스에 사용자 정의 자원 타입을 추가하는 확장 방식", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 53}, {"n": "Operator", "p": "오퍼레이터", "d": "운영 노하우를 코드로 구현해 특정 애플리케이션의 설치·복구를 자동화하는 쿠버네티스 확장", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 59}, {"n": "Helm", "p": "헬름", "d": "쿠버네티스 애플리케이션의 설치·버전 관리를 패키지 단위로 다루는 도구", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 59}, {"n": "Control Plane", "p": "컨트롤 플레인", "d": "제어 평면. 자원의 상태를 결정하고 명령을 내리는 관리 계층", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 71}, {"n": "Single Control Plane", "p": "싱글 컨트롤 플레인", "d": "단일 제어 평면. 이기종 자원과 여러 클러스터를 하나의 관리 계층에서 통제하는 구조", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 60}, {"n": "Multi-Cluster", "p": "멀티 클러스터", "d": "복수의 쿠버네티스 클러스터를 함께 운영·통합 관제하는 구성", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 80}, {"n": "Scheduler", "p": "스케줄러", "d": "어느 작업을 어느 자원에 언제 배치할지 결정하는 구성 요소", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 86}, {"n": "Gang Scheduling", "p": "갱 스케줄링", "d": "분산 학습에 필요한 모든 자원이 확보될 때 한꺼번에 작업을 시작시키는 스케줄링. 부분 점유로 인한 교착을 방지", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 53}, {"n": "Queue", "p": "큐", "d": "대기열. 자원이 빌 때까지 작업이 순서대로 기다리는 구조. 단일 큐 운영이 자원 간섭을 줄임", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 71}, {"n": "Preemption", "p": "프리엠션", "d": "우선순위가 높은 작업을 위해 실행 중인 낮은 우선순위 작업을 중단시키는 것", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 35}, {"n": "Cordon", "p": "코든", "d": "노드를 신규 배치 대상에서 제외해 점검·교체를 준비하는 조치", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 54}, {"n": "HA (High Availability)", "p": "에이치에이", "d": "고가용성. 일부 구성 요소가 죽어도 서비스가 계속되도록 이중화한 구성", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 71}, {"n": "Auto Scaling", "p": "오토 스케일링", "d": "부하에 따라 자원을 자동으로 늘리고 줄이는 기능", "c": "클라우드 & 쿠버네티스", "f": 1, "s": 26}, {"n": "On-Premise", "p": "온프레미스", "d": "자체 전산실·데이터센터에 직접 구축해 운영하는 방식", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 74}, {"n": "Private Cloud", "p": "프라이빗 클라우드", "d": "특정 조직 전용으로 구성된 클라우드 환경", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 74}, {"n": "Public Cloud", "p": "퍼블릭 클라우드", "d": "클라우드 사업자가 다수 고객에게 공유 제공하는 환경", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 74}, {"n": "Hybrid Cloud", "p": "하이브리드 클라우드", "d": "온프레미스와 퍼블릭 클라우드를 함께 쓰는 구성", "c": "클라우드 & 쿠버네티스", "f": 1, "s": 26}, {"n": "VPC", "p": "브이피씨", "d": "Virtual Private Cloud. 퍼블릭 클라우드 안에 논리적으로 격리된 전용 네트워크 구간", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 59}, {"n": "Air-gapped (폐쇄망)", "p": "에어갭", "d": "외부 네트워크와 물리적으로 분리된 환경. 금융·공공 보안 요건에서 요구됨", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 80}, {"n": "IaaS / PaaS / SaaS", "p": "아이아스 파스 사스", "d": "클라우드 제공 계층. 순서대로 인프라, 플랫폼, 완성 소프트웨어를 서비스로 제공", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 86}, {"n": "CSP", "p": "씨에스피", "d": "Cloud Service Provider. 클라우드 서비스 사업자", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 86}, {"n": "MSA", "p": "엠에스에이", "d": "Microservices Architecture. 기능을 작은 독립 서비스로 나눠 배포·확장하는 아키텍처", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 59}, {"n": "Service Mesh", "p": "서비스 메시", "d": "서비스 간 통신·보안·관측을 애플리케이션 밖에서 처리하는 인프라 계층", "c": "클라우드 & 쿠버네티스", "f": 1, "s": 20}, {"n": "Vendor Lock-in", "p": "벤더 락인", "d": "특정 공급사 기술에 종속돼 전환 비용이 과도하게 커지는 상태", "c": "클라우드 & 쿠버네티스", "f": 1, "s": 20}, {"n": "CNCF", "p": "씨엔씨에프", "d": "Cloud Native Computing Foundation. 쿠버네티스 등 클라우드 네이티브 기술의 표준을 관리하는 국제 재단", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 77}, {"n": "DevOps", "p": "데브옵스", "d": "개발과 운영을 통합해 배포 주기를 단축하는 문화이자 방법론", "c": "MLOps & 운영", "f": 3, "s": 74}, {"n": "MLOps", "p": "엠엘옵스", "d": "Machine Learning Operations. ML 모델의 학습·배포·모니터링·재학습을 체계화한 운영 방식", "c": "MLOps & 운영", "f": 3, "s": 92}, {"n": "LLMOps", "p": "엘엘엠옵스", "d": "LLM 전용 운영 체계. 프롬프트 관리, 모델 교체, 토큰 비용, 품질 추적을 다룸", "c": "MLOps & 운영", "f": 2, "s": 50}, {"n": "AIOps", "p": "에이아이옵스", "d": "AI for IT Operations. 로그·지표를 AI로 분석해 장애를 예측하고 조치를 자동화하는 운영 방식", "c": "MLOps & 운영", "f": 3, "s": 86}, {"n": "DataOps", "p": "데이터옵스", "d": "데이터 파이프라인의 품질·계보·거버넌스를 지속적으로 관리하는 운영 방식", "c": "MLOps & 운영", "f": 3, "s": 77}, {"n": "PlatformOps", "p": "플랫폼옵스", "d": "여러 자원과 클러스터를 통합 관제하며 표준화된 플랫폼을 제공·운영하는 영역", "c": "MLOps & 운영", "f": 3, "s": 62}, {"n": "FinOps", "p": "핀옵스", "d": "클라우드·GPU 비용을 가시화하고 예산·과금을 통제하는 재무 운영 체계", "c": "MLOps & 운영", "f": 3, "s": 86}, {"n": "SecOps", "p": "섹옵스", "d": "보안을 운영 프로세스에 통합해 접근 제어·감사·정책을 상시 관리하는 영역", "c": "MLOps & 운영", "f": 2, "s": 59}, {"n": "CI/CD", "p": "씨아이 씨디", "d": "지속적 통합/지속적 배포. 변경 사항을 자동으로 검증하고 배포하는 파이프라인", "c": "MLOps & 운영", "f": 3, "s": 83}, {"n": "Pipeline", "p": "파이프라인", "d": "데이터 수집부터 학습·평가·배포까지 단계를 자동으로 연결한 흐름", "c": "MLOps & 운영", "f": 3, "s": 86}, {"n": "Deployment", "p": "디플로이먼트", "d": "배포. 학습된 모델을 실제 서비스 환경에 올려 요청을 처리하게 하는 것", "c": "MLOps & 운영", "f": 3, "s": 74}, {"n": "Serving", "p": "서빙", "d": "모델을 API 형태로 노출해 추론 요청을 처리하는 것", "c": "MLOps & 운영", "f": 2, "s": 59}, {"n": "Model Registry", "p": "모델 레지스트리", "d": "모델의 버전·메타데이터·승인 상태를 등록·관리하는 저장소", "c": "MLOps & 운영", "f": 1, "s": 26}, {"n": "Model Drift", "p": "모델 드리프트", "d": "시간이 지나며 입력 분포가 변해 모델 성능이 점차 떨어지는 현상", "c": "MLOps & 운영", "f": 1, "s": 26}, {"n": "Data Drift", "p": "데이터 드리프트", "d": "운영 데이터의 분포가 학습 당시와 달라지는 현상. 재학습 판단의 신호", "c": "MLOps & 운영", "f": 1, "s": 26}, {"n": "Retraining", "p": "리트레이닝", "d": "재학습. 성능 저하나 데이터 변화에 대응해 모델을 다시 학습시키는 것", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "Canary Deployment", "p": "카나리 배포", "d": "일부 트래픽에만 새 버전을 먼저 노출해 위험을 줄이는 배포 전략", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "Blue-Green Deployment", "p": "블루그린 배포", "d": "동일한 두 환경을 번갈아 전환해 무중단으로 배포하는 전략", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "Shadow Deployment", "p": "섀도우 배포", "d": "실제 트래픽을 새 모델에도 흘려보내되 결과는 반영하지 않고 검증만 하는 방식", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "A/B Test", "p": "에이비 테스트", "d": "두 버전을 동시에 운영하며 지표로 우열을 비교하는 실험 방법", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "Rollback", "p": "롤백", "d": "문제가 생긴 배포를 이전의 안정 버전으로 되돌리는 조치", "c": "MLOps & 운영", "f": 2, "s": 44}, {"n": "Monitoring", "p": "모니터링", "d": "배포된 시스템의 상태·성능을 지속적으로 관측하는 활동", "c": "MLOps & 운영", "f": 3, "s": 83}, {"n": "Observability", "p": "옵저버빌리티", "d": "관측 가능성. 로그·지표·추적으로 시스템 내부 상태를 외부에서 파악할 수 있는 성질", "c": "MLOps & 운영", "f": 2, "s": 59}, {"n": "Prometheus", "p": "프로메테우스", "d": "시계열 지표를 수집·저장하는 오픈소스 모니터링 시스템", "c": "MLOps & 운영", "f": 3, "s": 68}, {"n": "Grafana", "p": "그라파나", "d": "수집된 지표를 대시보드로 시각화하는 오픈소스 도구", "c": "MLOps & 운영", "f": 2, "s": 59}, {"n": "MTTR", "p": "엠티티알", "d": "Mean Time To Repair. 장애 발생부터 복구까지 걸린 평균 시간. 운영 역량의 핵심 지표", "c": "MLOps & 운영", "f": 3, "s": 86}, {"n": "MTBF", "p": "엠티비에프", "d": "Mean Time Between Failures. 장애와 장애 사이의 평균 가동 시간", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "SLA", "p": "에스엘에이", "d": "Service Level Agreement. 제공자가 보장하는 서비스 수준을 계약으로 명시한 것", "c": "MLOps & 운영", "f": 3, "s": 83}, {"n": "SLO", "p": "에스엘오", "d": "Service Level Objective. 조직이 내부적으로 달성을 목표하는 서비스 수준", "c": "MLOps & 운영", "f": 2, "s": 59}, {"n": "SLI", "p": "에스엘아이", "d": "Service Level Indicator. SLO 달성 여부를 재는 실제 측정 지표", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "Managed Service", "p": "매니지드 서비스", "d": "구축 이후의 운영·개선까지 전문 조직이 대행하는 서비스 형태", "c": "MLOps & 운영", "f": 2, "s": 44}, {"n": "Self-healing", "p": "셀프 힐링", "d": "자동 복구. 장애를 감지하면 사람 개입 없이 재시작·대체 배치로 스스로 복구하는 기능", "c": "MLOps & 운영", "f": 2, "s": 44}, {"n": "Chaos Engineering", "p": "카오스 엔지니어링", "d": "의도적으로 장애를 주입해 시스템의 회복력을 사전 검증하는 방법론", "c": "MLOps & 운영", "f": 2, "s": 36}, {"n": "Runbook", "p": "런북", "d": "장애 상황별 대응 절차를 표준화해 기록한 문서", "c": "MLOps & 운영", "f": 2, "s": 53}, {"n": "Idle Resource", "p": "유휴 자원", "d": "할당됐지만 실제로 쓰이지 않는 자원. 회수 대상이자 비용 낭비의 원인", "c": "MLOps & 운영", "f": 2, "s": 36}, {"n": "Utilization", "p": "유틸라이제이션", "d": "활용률. 할당된 자원이 실제로 사용된 비율", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "Makespan", "p": "메이크스팬", "d": "전체 작업 집합이 모두 끝나기까지의 총 소요 시간. 스케줄링 효율의 지표", "c": "MLOps & 운영", "f": 2, "s": 54}, {"n": "JCT (Job Completion Time)", "p": "제이씨티", "d": "개별 작업이 제출부터 완료까지 걸린 시간", "c": "MLOps & 운영", "f": 2, "s": 45}, {"n": "Throughput", "p": "스루풋", "d": "처리량. 단위 시간당 처리한 요청 또는 데이터의 양", "c": "MLOps & 운영", "f": 3, "s": 65}, {"n": "Workload", "p": "워크로드", "d": "시스템이 처리해야 할 작업 또는 그 작업이 요구하는 자원 부하", "c": "MLOps & 운영", "f": 3, "s": 92}, {"n": "Accuracy", "p": "액큐러시", "d": "정확도. 전체 예측 중 맞게 맞힌 비율", "c": "성능 & 평가 지표", "f": 2, "s": 32}, {"n": "Precision", "p": "프리시전", "d": "정밀도. 양성이라 예측한 것 중 실제 양성의 비율", "c": "성능 & 평가 지표", "f": 1, "s": 26}, {"n": "Recall", "p": "리콜", "d": "재현율. 실제 양성 중 모델이 찾아낸 비율", "c": "성능 & 평가 지표", "f": 1, "s": 26}, {"n": "F1 Score", "p": "에프원 스코어", "d": "정밀도와 재현율의 조화평균. 두 지표가 상충할 때 균형을 보는 척도", "c": "성능 & 평가 지표", "f": 1, "s": 26}, {"n": "Confusion Matrix", "p": "컨퓨전 매트릭스", "d": "혼동 행렬. 예측과 실제를 교차한 표로 오류 유형을 분해해 보는 도구", "c": "성능 & 평가 지표", "f": 1, "s": 26}, {"n": "AUC-ROC", "p": "에이유씨 알오씨", "d": "분류 임계값 전체에 걸친 판별 성능을 하나의 수치로 요약한 지표", "c": "성능 & 평가 지표", "f": 1, "s": 20}, {"n": "Perplexity", "p": "펄플렉시티", "d": "혼란도. 언어모델이 다음 토큰을 얼마나 잘 예측하는지 나타내는 지표. 낮을수록 좋음", "c": "성능 & 평가 지표", "f": 1, "s": 26}, {"n": "BLEU", "p": "블루", "d": "생성된 번역문이 기준 번역과 얼마나 겹치는지 측정하는 지표", "c": "성능 & 평가 지표", "f": 1, "s": 20}, {"n": "ROUGE", "p": "루지", "d": "생성 요약문이 기준 요약과 겹치는 정도를 측정하는 지표", "c": "성능 & 평가 지표", "f": 1, "s": 20}, {"n": "Latency", "p": "레이턴시", "d": "지연시간. 요청부터 응답까지 걸리는 시간", "c": "성능 & 평가 지표", "f": 2, "s": 56}, {"n": "TTFT (Time To First Token)", "p": "티티에프티", "d": "첫 토큰이 나오기까지의 시간. 생성형 서비스의 체감 반응성을 좌우", "c": "성능 & 평가 지표", "f": 1, "s": 20}, {"n": "TPS / QPS", "p": "티피에스 큐피에스", "d": "초당 처리 토큰 수 / 초당 처리 질의 수. 처리 용량의 단위", "c": "성능 & 평가 지표", "f": 2, "s": 35}, {"n": "Benchmark", "p": "벤치마크", "d": "표준화된 과제 묶음으로 모델 성능을 비교 측정하는 평가", "c": "성능 & 평가 지표", "f": 2, "s": 56}, {"n": "Ground Truth", "p": "그라운드 트루스", "d": "정답 기준. 평가의 비교 대상이 되는 참값", "c": "성능 & 평가 지표", "f": 2, "s": 59}, {"n": "Faithfulness", "p": "페이스풀니스", "d": "충실도. 생성된 답변이 근거 문서의 내용에서 벗어나지 않는 정도. RAG 품질 지표", "c": "성능 & 평가 지표", "f": 1, "s": 20}, {"n": "Relevance", "p": "릴러번스", "d": "관련성. 검색 결과나 답변이 질문에 실제로 부합하는 정도", "c": "성능 & 평가 지표", "f": 1, "s": 20}, {"n": "LLM-as-a-Judge", "p": "엘엘엠 애즈 어 저지", "d": "사람 대신 LLM이 출력 품질을 채점하게 하는 평가 방식", "c": "성능 & 평가 지표", "f": 1, "s": 12}, {"n": "Governance", "p": "거버넌스", "d": "데이터와 AI의 사용 권한·품질·책임 소재를 정책과 절차로 통제하는 관리 체계", "c": "데이터 & 거버넌스", "f": 3, "s": 92}, {"n": "Data Governance", "p": "데이터 거버넌스", "d": "데이터의 소유·분류·품질·접근을 조직 차원의 규칙으로 관리하는 체계", "c": "데이터 & 거버넌스", "f": 2, "s": 56}, {"n": "AI Governance", "p": "에이아이 거버넌스", "d": "모델의 개발·배포·사용 전 과정에 책임과 통제 장치를 두는 관리 체계", "c": "데이터 & 거버넌스", "f": 1, "s": 20}, {"n": "Metadata", "p": "메타데이터", "d": "데이터에 대한 데이터. 항목의 의미·출처·형식·담당자 등을 기술한 정보", "c": "데이터 & 거버넌스", "f": 3, "s": 74}, {"n": "Data Catalog", "p": "데이터 카탈로그", "d": "조직 내 데이터 자산을 검색 가능한 형태로 목록화한 것", "c": "데이터 & 거버넌스", "f": 1, "s": 26}, {"n": "Data Lineage", "p": "데이터 리니지", "d": "데이터 계보. 데이터가 어디서 와서 어떤 변환을 거쳐 어디로 갔는지 추적한 흐름", "c": "데이터 & 거버넌스", "f": 2, "s": 59}, {"n": "Data Quality", "p": "데이터 품질", "d": "정확성·완전성·일관성·적시성 등 데이터가 신뢰할 만한 정도", "c": "데이터 & 거버넌스", "f": 2, "s": 50}, {"n": "Data Standardization", "p": "데이터 표준화", "d": "용어·코드·형식을 공통 규칙으로 통일해 조직 전체가 같은 의미로 쓰게 하는 작업", "c": "데이터 & 거버넌스", "f": 2, "s": 44}, {"n": "Master Data", "p": "마스터 데이터", "d": "고객·상품처럼 여러 업무에서 공통으로 참조하는 핵심 기준 데이터", "c": "데이터 & 거버넌스", "f": 1, "s": 20}, {"n": "Data Steward", "p": "데이터 스튜어드", "d": "특정 데이터 영역의 품질과 정의를 책임지는 담당자", "c": "데이터 & 거버넌스", "f": 1, "s": 12}, {"n": "Data Mesh", "p": "데이터 메시", "d": "중앙 집중 대신 도메인별로 데이터 소유권과 책임을 분산하는 아키텍처", "c": "데이터 & 거버넌스", "f": 1, "s": 20}, {"n": "Data Lake", "p": "데이터 레이크", "d": "원천 형태 그대로 대량의 정형·비정형 데이터를 모아 두는 저장소", "c": "데이터 & 거버넌스", "f": 1, "s": 26}, {"n": "Data Warehouse", "p": "데이터 웨어하우스", "d": "분석 목적에 맞게 정제·구조화해 적재한 데이터 저장소", "c": "데이터 & 거버넌스", "f": 1, "s": 26}, {"n": "Lakehouse", "p": "레이크하우스", "d": "데이터 레이크의 유연성과 웨어하우스의 정합성을 결합한 아키텍처", "c": "데이터 & 거버넌스", "f": 1, "s": 20}, {"n": "ETL / ELT", "p": "이티엘 이엘티", "d": "데이터를 추출·변환·적재하는 처리 방식. ELT는 적재 후 변환하는 순서", "c": "데이터 & 거버넌스", "f": 1, "s": 26}, {"n": "Structured / Unstructured Data", "p": "정형 비정형 데이터", "d": "표 형태로 정리된 데이터와 문서·이미지·음성처럼 정형화되지 않은 데이터", "c": "데이터 & 거버넌스", "f": 1, "s": 20}, {"n": "AI-Ready Data", "p": "에이아이 레디 데이터", "d": "AI가 바로 학습·검색에 쓸 수 있도록 정제·표준화·권한 정비가 끝난 데이터", "c": "데이터 & 거버넌스", "f": 2, "s": 36}, {"n": "Synthetic Data", "p": "신세틱 데이터", "d": "합성 데이터. 실제 데이터를 대체하거나 보완하기 위해 인공적으로 생성한 데이터", "c": "데이터 & 거버넌스", "f": 1, "s": 20}, {"n": "Data Labeling", "p": "데이터 라벨링", "d": "학습에 쓸 수 있도록 데이터에 정답 정보를 부여하는 작업", "c": "데이터 & 거버넌스", "f": 1, "s": 20}, {"n": "PII", "p": "피아이아이", "d": "Personally Identifiable Information. 개인을 식별할 수 있는 정보", "c": "데이터 & 거버넌스", "f": 2, "s": 47}, {"n": "De-identification", "p": "비식별화", "d": "개인을 알아볼 수 없도록 식별 정보를 제거·변환하는 처리", "c": "데이터 & 거버넌스", "f": 2, "s": 35}, {"n": "Masking", "p": "마스킹", "d": "민감한 값의 일부 또는 전부를 가려 노출을 막는 처리", "c": "데이터 & 거버넌스", "f": 2, "s": 44}, {"n": "Audit Trail", "p": "감사 추적", "d": "누가 언제 무엇을 했는지 되짚을 수 있도록 남긴 기록", "c": "데이터 & 거버넌스", "f": 3, "s": 68}, {"n": "RBAC", "p": "알백", "d": "Role-Based Access Control. 역할에 따라 접근 권한을 부여하는 통제 방식", "c": "데이터 & 거버넌스", "f": 3, "s": 65}, {"n": "Multi-tenancy", "p": "멀티테넌시", "d": "하나의 시스템을 여러 조직·사용자가 서로 격리된 상태로 함께 쓰는 구조", "c": "데이터 & 거버넌스", "f": 3, "s": 62}, {"n": "Least Privilege", "p": "최소 권한", "d": "업무 수행에 꼭 필요한 최소한의 권한만 부여하는 보안 원칙", "c": "데이터 & 거버넌스", "f": 1, "s": 20}, {"n": "Model Card", "p": "모델 카드", "d": "모델의 용도·한계·학습 데이터·평가 결과를 표준 양식으로 공개한 문서", "c": "데이터 & 거버넌스", "f": 1, "s": 20}, {"n": "Explainability (XAI)", "p": "익스플레이너빌리티", "d": "설명가능성. 모델이 그런 결론에 이른 근거를 사람이 이해할 수 있게 제시하는 것", "c": "데이터 & 거버넌스", "f": 2, "s": 50}, {"n": "Reproducibility", "p": "리프로듀서빌리티", "d": "재현성. 같은 입력과 설정에서 같은 결과를 다시 얻을 수 있는 성질", "c": "데이터 & 거버넌스", "f": 1, "s": 20}, {"n": "Red Teaming", "p": "레드 티밍", "d": "공격자 관점에서 모델의 취약점을 의도적으로 찾아내는 사전 점검 활동", "c": "보안 & 안전", "f": 1, "s": 26}, {"n": "Adversarial Attack", "p": "적대적 공격", "d": "모델이 오작동하도록 입력을 미세하게 조작하는 공격 기법", "c": "보안 & 안전", "f": 1, "s": 20}, {"n": "Data Poisoning", "p": "데이터 포이즈닝", "d": "학습 데이터에 악의적 데이터를 섞어 모델의 행동을 왜곡시키는 공격", "c": "보안 & 안전", "f": 1, "s": 20}, {"n": "Model Extraction", "p": "모델 추출", "d": "반복 질의로 모델의 동작이나 가중치를 복제해 내는 공격", "c": "보안 & 안전", "f": 1, "s": 12}, {"n": "Membership Inference", "p": "멤버십 인퍼런스", "d": "특정 데이터가 학습에 쓰였는지 추론해 내는 프라이버시 공격", "c": "보안 & 안전", "f": 1, "s": 12}, {"n": "Differential Privacy", "p": "디퍼렌셜 프라이버시", "d": "차등 프라이버시. 통계적 노이즈를 더해 개별 데이터의 노출을 수학적으로 제한하는 기법", "c": "보안 & 안전", "f": 1, "s": 20}, {"n": "Zero Trust", "p": "제로 트러스트", "d": "내부든 외부든 어떤 요청도 기본적으로 신뢰하지 않고 매번 검증하는 보안 모델", "c": "보안 & 안전", "f": 1, "s": 26}, {"n": "Safety", "p": "세이프티", "d": "안전성. AI 시스템이 사람과 사회에 해를 끼치지 않도록 보장하는 속성", "c": "보안 & 안전", "f": 1, "s": 20}, {"n": "Robustness", "p": "로버스트니스", "d": "견고성. 예상 밖의 입력이나 환경에서도 성능이 급격히 무너지지 않는 특성", "c": "보안 & 안전", "f": 1, "s": 20}, {"n": "Fairness", "p": "페어니스", "d": "공정성. 특정 집단에 불리하게 작동하지 않도록 설계·검증하는 속성", "c": "보안 & 안전", "f": 1, "s": 26}, {"n": "Algorithmic Bias", "p": "알고리즘 편향", "d": "학습 데이터나 설계에서 비롯해 특정 집단에 불공정하게 작용하는 모델의 경향", "c": "보안 & 안전", "f": 1, "s": 20}, {"n": "Transparency", "p": "트랜스패런시", "d": "투명성. AI의 작동 방식과 한계를 이해관계자가 알 수 있게 공개하는 것", "c": "보안 & 안전", "f": 1, "s": 26}, {"n": "Accountability", "p": "어카운터빌리티", "d": "책임성. AI가 초래한 결과에 대해 책임 주체가 명확한 상태", "c": "보안 & 안전", "f": 1, "s": 20}, {"n": "Privacy", "p": "프라이버시", "d": "개인정보보호. 개인의 정보가 동의 범위를 넘어 수집·이용되지 않도록 보호하는 것", "c": "보안 & 안전", "f": 1, "s": 26}, {"n": "Watermarking", "p": "워터마킹", "d": "AI가 생성한 콘텐츠임을 식별할 수 있도록 기계가 읽을 수 있는 표식을 넣는 기술", "c": "보안 & 안전", "f": 1, "s": 20}, {"n": "Deepfake", "p": "딥페이크", "d": "실제 인물의 얼굴·음성을 합성해 진짜처럼 보이게 만든 콘텐츠", "c": "보안 & 안전", "f": 1, "s": 26}, {"n": "DRM", "p": "디알엠", "d": "Digital Rights Management. 디지털 자산의 복제·이용을 기술적으로 통제해 권리를 보호하는 체계", "c": "보안 & 안전", "f": 1, "s": 20}, {"n": "Responsible AI", "p": "리스판서블 에이아이", "d": "책임 있는 AI. 윤리·투명성·안전성을 설계 단계부터 반영하는 개발 원칙", "c": "보안 & 안전", "f": 1, "s": 26}, {"n": "EU AI Act", "p": "유럽 AI 법", "d": "유럽연합 인공지능법. 2024년 공포. 제50조 투명성 의무는 2026년 8월 2일 시행됐고, 고위험 의무는 부속서 III가 2027년 12월 2일, 부속서 I이 2028년 8월 2일로 연기됨(규정 EU 2026/1744)", "c": "규제 & 정책", "f": 1, "s": 26}, {"n": "AI 기본법 (Korea AI Basic Act)", "p": "에이아이 기본법", "d": "「인공지능 발전과 신뢰 기반 조성 등에 관한 기본법」. 2026년 1월 22일 시행 중. 과태료는 최소 1년 이상 계도기간이 운영되나 의무 자체는 면제되지 않음", "c": "규제 & 정책", "f": 2, "s": 41}, {"n": "High-Risk AI", "p": "하이리스크 에이아이", "d": "고위험 AI. 채용·신용평가·교육·의료 등 기본권에 영향을 주는 용도로 분류돼 엄격한 의무가 부과되는 AI 시스템", "c": "규제 & 정책", "f": 1, "s": 26}, {"n": "GPAI", "p": "지피에이아이", "d": "General Purpose AI. 범용 AI 모델. EU AI Act에서 별도의 투명성·안전 의무가 부과되는 범주", "c": "규제 & 정책", "f": 1, "s": 20}, {"n": "Conformity Assessment", "p": "적합성 평가", "d": "규제 요건을 충족했는지 시장 출시 전에 검증하는 절차", "c": "규제 & 정책", "f": 1, "s": 20}, {"n": "Risk Management", "p": "리스크 매니지먼트", "d": "위험 관리. AI 시스템의 잠재 위험을 식별·평가·완화하고 문서화하는 절차", "c": "규제 & 정책", "f": 1, "s": 20}, {"n": "Transparency Requirements", "p": "트랜스패런시 리콰이어먼츠", "d": "투명성 요구사항. AI와 상호작용 중임을 알리고 생성 콘텐츠를 표시할 의무", "c": "규제 & 정책", "f": 1, "s": 20}, {"n": "GDPR", "p": "지디피알", "d": "EU 일반개인정보보호규정. 개인정보 처리의 법적 근거와 정보주체 권리를 규정", "c": "규제 & 정책", "f": 1, "s": 26}, {"n": "개인정보보호법", "p": "개인정보보호법", "d": "국내 개인정보 처리 전반을 규율하는 법률. AI 학습 데이터 활용의 기본 전제", "c": "규제 & 정책", "f": 1, "s": 26}, {"n": "ISO/IEC 42001", "p": "아이에스오 사만이천일", "d": "AI 경영시스템 국제 표준. 조직의 AI 거버넌스 체계를 인증 가능한 형태로 규정", "c": "규제 & 정책", "f": 3, "s": 62}, {"n": "NIST AI RMF", "p": "니스트 에이아이 알엠에프", "d": "미국 NIST의 AI 위험관리 프레임워크. 자발적 기준이지만 사실상 참조 표준으로 쓰임", "c": "규제 & 정책", "f": 1, "s": 20}, {"n": "KOLAS", "p": "코라스", "d": "한국인정기구. 시험·교정기관의 능력을 공인하는 제도. 공인시험성적서의 근거", "c": "규제 & 정책", "f": 3, "s": 72}, {"n": "CNCF KCSP", "p": "케이씨에스피", "d": "Kubernetes Certified Service Provider. CNCF가 인증한 쿠버네티스 전문 서비스 제공자 자격", "c": "규제 & 정책", "f": 2, "s": 54}, {"n": "Certified Kubernetes", "p": "서티파이드 쿠버네티스", "d": "CNCF가 표준 호환성을 검증한 쿠버네티스 배포판에 부여하는 인증", "c": "규제 & 정책", "f": 2, "s": 45}, {"n": "AX (AI Transformation)", "p": "에이엑스", "d": "AI 전환. 기업의 업무와 시스템을 AI 기반 운영 체계로 바꾸는 활동", "c": "비즈니스 & 시장", "f": 3, "s": 92}, {"n": "DX (Digital Transformation)", "p": "디엑스", "d": "디지털 전환. 디지털 기술로 업무 방식과 비즈니스 모델을 재편하는 활동", "c": "비즈니스 & 시장", "f": 2, "s": 47}, {"n": "PoC", "p": "피오씨", "d": "Proof of Concept. 개념 검증. 본 도입 전 기술적 실현 가능성을 작게 확인하는 단계", "c": "비즈니스 & 시장", "f": 3, "s": 83}, {"n": "Pilot", "p": "파일럿", "d": "제한된 범위에서 실제 업무에 적용해 보는 시범 운영 단계", "c": "비즈니스 & 시장", "f": 2, "s": 35}, {"n": "Adoption Gap", "p": "어돕션 갭", "d": "도입 격차. 기술 검증은 성공했으나 실제 업무 확산으로 이어지지 않는 간극", "c": "비즈니스 & 시장", "f": 1, "s": 27}, {"n": "TCO", "p": "티씨오", "d": "Total Cost of Ownership. 도입부터 운영·폐기까지의 총소유비용", "c": "비즈니스 & 시장", "f": 2, "s": 41}, {"n": "ROI", "p": "알오아이", "d": "Return on Investment. 투자 대비 수익률", "c": "비즈니스 & 시장", "f": 3, "s": 74}, {"n": "CAPEX / OPEX", "p": "캐펙스 오펙스", "d": "자본적 지출과 운영 비용. 자체 구축은 CAPEX, 클라우드 사용은 OPEX 성격", "c": "비즈니스 & 시장", "f": 2, "s": 53}, {"n": "CAGR", "p": "씨에이지이알", "d": "Compound Annual Growth Rate. 연평균 복합 성장률", "c": "비즈니스 & 시장", "f": 3, "s": 68}, {"n": "TAM", "p": "탐", "d": "Total Addressable Market. 전체 시장 규모. 이론적으로 도달 가능한 최대 시장", "c": "비즈니스 & 시장", "f": 2, "s": 59}, {"n": "SAM", "p": "샘", "d": "Serviceable Addressable Market. 유효 시장. 실제 제품·채널로 접근 가능한 범위", "c": "비즈니스 & 시장", "f": 2, "s": 59}, {"n": "SOM", "p": "솜", "d": "Serviceable Obtainable Market. 수익 시장. 단기간에 실제로 확보 가능한 규모", "c": "비즈니스 & 시장", "f": 2, "s": 50}, {"n": "Market Share (M/S)", "p": "마켓 셰어", "d": "시장점유율. 전체 시장에서 차지하는 비율", "c": "비즈니스 & 시장", "f": 3, "s": 62}, {"n": "Monetization", "p": "머니타이제이션", "d": "수익화. 제품·서비스를 매출로 전환하는 방식", "c": "비즈니스 & 시장", "f": 2, "s": 44}, {"n": "KPI", "p": "케이피아이", "d": "Key Performance Indicator. 목표 달성도를 재는 핵심 성과 지표", "c": "비즈니스 & 시장", "f": 3, "s": 65}, {"n": "FDE (Forward Deployed Engineer)", "p": "에프디이", "d": "고객 현장에 투입돼 업무 요구를 기술 구현으로 직접 연결하는 엔지니어 역할", "c": "비즈니스 & 시장", "f": 3, "s": 72}, {"n": "E2E (End-to-End)", "p": "이투이", "d": "처음부터 끝까지. 인프라·데이터·모델·애플리케이션 전 구간을 단절 없이 수행하는 것", "c": "비즈니스 & 시장", "f": 3, "s": 77}, {"n": "Land and Expand", "p": "랜드 앤 익스팬드", "d": "작게 도입한 뒤 성과를 근거로 적용 범위를 넓혀가는 영업 전략", "c": "비즈니스 & 시장", "f": 1, "s": 20}, {"n": "Recurring Revenue", "p": "리커링 레버뉴", "d": "반복 매출. 구독·운영 계약처럼 지속적으로 발생하는 수익", "c": "비즈니스 & 시장", "f": 1, "s": 20}, {"n": "SI", "p": "에스아이", "d": "System Integration. 고객 요구에 맞춰 시스템을 설계·구축·통합하는 사업 형태", "c": "비즈니스 & 시장", "f": 2, "s": 59}, {"n": "Consortium", "p": "컨소시엄", "d": "복수 기업·기관이 공동으로 사업을 수행하기 위해 구성한 연합체", "c": "비즈니스 & 시장", "f": 3, "s": 71}, {"n": "SPC", "p": "에스피씨", "d": "Special Purpose Company. 특정 사업만을 위해 설립한 특수목적법인", "c": "비즈니스 & 시장", "f": 3, "s": 71}, {"n": "TRL", "p": "티알엘", "d": "Technology Readiness Level. 기술 성숙도를 1~9단계로 평가하는 척도", "c": "비즈니스 & 시장", "f": 2, "s": 59}, {"n": "AI Operations", "p": "에이아이 오퍼레이션즈", "d": "AI 시스템 운영 전반. 모델 배포·모니터링·성능 최적화·유지보수를 아우르며 MLOps·LLMOps·AgentOps를 포괄하는 상위 개념", "c": "MLOps & 운영", "f": 2, "s": 35}, {"n": "KServe", "p": "케이서브", "d": "쿠버네티스 위에서 모델 추론 서비스를 표준화해 배포·확장하는 서빙 프레임워크", "c": "MLOps & 운영", "f": 2, "s": 35}, {"n": "vLLM", "p": "브이엘엘엠", "d": "KV 캐시를 효율적으로 관리해 LLM 추론 처리량을 크게 높인 서빙 엔진", "c": "MLOps & 운영", "f": 2, "s": 53}, {"n": "Batch Inference", "p": "배치 인퍼런스", "d": "실시간 응답 대신 대량의 입력을 모아 한꺼번에 추론하는 방식. 단가가 낮음", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "Warm-up", "p": "웜업", "d": "첫 요청의 지연을 줄이기 위해 모델·캐시를 미리 올려 두는 준비 동작", "c": "MLOps & 운영", "f": 1, "s": 12}, {"n": "Tensor", "p": "텐서", "d": "다차원 숫자 배열. 딥러닝 연산이 다루는 기본 자료 구조", "c": "딥러닝 & 아키텍처", "f": 1, "s": 26}, {"n": "Embedding Model", "p": "임베딩 모델", "d": "텍스트·이미지를 벡터로 변환하는 전용 모델. 검색 품질의 출발점", "c": "딥러닝 & 아키텍처", "f": 1, "s": 20}, {"n": "Knowledge Base", "p": "날리지 베이스", "d": "지식베이스. 에이전트와 RAG가 근거로 삼는 조직의 문서·데이터 집합", "c": "RAG & 검색", "f": 1, "s": 20}, {"n": "Prompt Template", "p": "프롬프트 템플릿", "d": "변수 자리를 비워 둔 재사용 가능한 프롬프트 양식. 버전 관리 대상", "c": "RAG & 검색", "f": 1, "s": 20}, {"n": "Knative", "p": "케이네이티브", "d": "쿠버네티스에서 서버리스 방식의 자동 확장·축소를 제공하는 플랫폼", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 35}, {"n": "Kueue", "p": "큐이", "d": "쿠버네티스에서 배치 작업의 대기열과 할당량을 관리하는 스케줄링 구성 요소", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 45}, {"n": "Federation", "p": "페더레이션", "d": "여러 독립 쿠버네티스 클러스터를 하나의 제어 평면으로 통합 관리하는 아키텍처", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 80}, {"n": "CAPI (Cluster API)", "p": "캐이피아이", "d": "쿠버네티스 클러스터의 생성·증설·업그레이드를 선언형 API로 관리하는 방식", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 54}, {"n": "IaC (Infrastructure as Code)", "p": "아이에이씨", "d": "인프라를 코드로 정의해 자동화하고 버전 관리하는 방식. YAML·Terraform 등으로 작성", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 59}, {"n": "Heterogeneous", "p": "헤테로지니어스", "d": "이기종. GPU·NPU·CPU처럼 서로 다른 종류의 자원을 하나의 체계에서 함께 다루는 것", "c": "클라우드 & 쿠버네티스", "f": 1, "s": 20}, {"n": "Broker-less", "p": "브로커리스", "d": "메시지 중개 서버 없이 노드끼리 직접 통신하는 방식. 병목을 없애고 지연을 낮춤", "c": "클라우드 & 쿠버네티스", "f": 2, "s": 45}, {"n": "Event Backbone", "p": "이벤트 백본", "d": "시스템의 모든 이벤트를 실시간으로 전파하는 기반 구조. 노드 간 상태 인지를 밀리초 단위로 유지", "c": "클라우드 & 쿠버네티스", "f": 3, "s": 63}, {"n": "GPU Clustering", "p": "지피유 클러스터링", "d": "수천 장 규모의 GPU를 하나의 클러스터로 묶어 운영하는 기술. 대규모 AI 인프라의 핵심", "c": "AI 인프라 & 하드웨어", "f": 1, "s": 20}, {"n": "GPU Controller", "p": "지피유 컨트롤러", "d": "GPU 자원 상태를 수집하고 단편화를 분석해 작업을 실시간 재배치하는 제어 엔진", "c": "AI 인프라 & 하드웨어", "f": 1, "s": 12}, {"n": "Fragmentation", "p": "프래그멘테이션", "d": "단편화. 자원이 잘게 흩어져 큰 작업에 필요한 연속 공간을 확보하지 못하는 상태", "c": "AI 인프라 & 하드웨어", "f": 1, "s": 12}, {"n": "Job Scheduling", "p": "잡 스케줄링", "d": "작업 스케줄링. 여러 작업을 자원에 효율적으로 배치해 대기 시간을 줄이고 처리량을 높이는 과정", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "Dynamic Scheduling", "p": "다이나믹 스케줄링", "d": "동적 스케줄링. 시스템 상태 변화에 따라 실행 중에도 작업 배치를 다시 조정하는 기법", "c": "MLOps & 운영", "f": 1, "s": 20}, {"n": "Resource Allocation", "p": "리소스 얼로케이션", "d": "자원 할당. GPU·메모리·CPU 등 가용 자원을 작업에 배분하는 과정", "c": "MLOps & 운영", "f": 2, "s": 44}, {"n": "Elastic Allocation", "p": "엘라스틱 얼로케이션", "d": "탄력적 할당. 최소·권장·최대 범위를 정의해 가용 자원에 따라 할당량을 유동적으로 조정", "c": "MLOps & 운영", "f": 1, "s": 12}, {"n": "DRA (Dynamic Resource Allocation)", "p": "디알에이", "d": "동적 자원 할당. 작업과 시스템 상태에 따라 실시간으로 자원을 재할당하는 기법", "c": "MLOps & 운영", "f": 2, "s": 54}, {"n": "Feature Extraction", "p": "피처 익스트랙션", "d": "특성 추출. 원본 데이터에서 의미 있는 특성을 자동으로 뽑아내 모델 입력으로 삼는 과정", "c": "AI · 머신러닝 기초", "f": 1, "s": 20}];
+const UPDATED = "2026.10.08";
 
-            for (const [sectionName, termList] of Object.entries(terms)) {
-                const sectionDiv = document.createElement('div');
-                sectionDiv.className = 'section active';
+const $ = s => document.querySelector(s);
+const qEl = $('#q'), results = $('#results'), rail = $('#rail'),
+      countEl = $('#count'), clearBtn = $('#clear');
+const CATS = [...new Set(TERMS.map(t => t.c))];
+let cat = 'all', docOnly = false;
 
-                let sectionTitle = document.createElement('div');
-                sectionTitle.className = 'section-title';
-                sectionTitle.textContent = sectionName;
-                sectionDiv.appendChild(sectionTitle);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm = s => String(s).toLowerCase().replace(/\s+/g, '');
 
-                // 현재 카테고리의 용어만 필터링
-                const filtered = termList.filter(term => {
-                    if (currentCategory !== 'all' && term.category !== currentCategory) {
-                        return false;
-                    }
-                    if (searchInput.value.trim() === '') {
-                        return true;
-                    }
-                    const searchTerm = searchInput.value.toLowerCase();
-                    const searchTermKo = searchInput.value; // 한글용 (소문자 변환 안 함)
-                    return term.name.toLowerCase().includes(searchTerm) ||
-                           term.def.toLowerCase().includes(searchTerm) ||
-                           term.pron.includes(searchTermKo) ||
-                           term.def.includes(searchTermKo);
-                });
+function hi(text, term){
+  const safe = esc(text);
+  if(!term) return safe;
+  const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  return safe.replace(re, m => '<mark>' + m + '</mark>');
+}
+function hit(t, term){
+  if(!term) return true;
+  const n = norm(term);
+  return norm(t.n).includes(n) || norm(t.p).includes(n) || norm(t.d).includes(n);
+}
+function say(text, btn){
+  if(!('speechSynthesis' in window)) return;
+  const clean = text.replace(/\(.*?\)/g, ' ').replace(/[가-힣]/g, '').replace(/\s+/g, ' ').trim();
+  if(!clean) return;
+  const u = new SpeechSynthesisUtterance(clean);
+  u.lang = 'en-US'; u.rate = .85;
+  try { speechSynthesis.cancel(); } catch(e) {}
+  if(btn){ btn.classList.add('on'); u.onend = u.onerror = () => btn.classList.remove('on'); }
+  speechSynthesis.speak(u);
+}
 
-                filtered.forEach(term => {
-                    const termDiv = document.createElement('div');
-                    termDiv.className = 'term-item';
-                    if (searchInput.value.trim() !== '' &&
-                        (term.name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
-                         term.def.toLowerCase().includes(searchInput.value.toLowerCase()) ||
-                         term.pron.includes(searchInput.value) ||
-                         term.def.includes(searchInput.value))) {
-                        termDiv.classList.add('highlight');
-                    }
+function freq(n){
+  const cells = [1,2,3].map(i => `<i class="${i<=n?'on':''}"></i>`).join('');
+  return `<span class="freq" role="img" aria-label="사용 빈도 ${n}/3" title="사용 빈도 ${n}/3">${cells}</span>`;
+}
 
-                    termDiv.innerHTML = `
-                        <div class="term-header">
-                            <div class="term-name">${term.name}</div>
-                            <div class="term-pronunciation">${term.pron}</div>
-                        </div>
-                        <div class="term-definition">${term.def}</div>
-                    `;
-                    sectionDiv.appendChild(termDiv);
-                    totalResults++;
-                });
+function buildRail(){
+  const docN = TERMS.filter(t => t.f === 3).length;
+  const chip = (label, key, n) =>
+    `<button type="button" data-k="${esc(key)}" aria-pressed="${cat===key}">${esc(label)}<span class="n">${n}</span></button>`;
+  rail.innerHTML =
+    chip('전체', 'all', TERMS.length) +
+    `<button type="button" class="doc" data-doc="1" aria-pressed="${docOnly}">자주 쓰임<span class="n">${docN}</span></button>` +
+    CATS.map(c => chip(c, c, TERMS.filter(t => t.c === c).length)).join('');
+}
+rail.addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  if(b.dataset.doc) docOnly = !docOnly; else cat = b.dataset.k;
+  buildRail(); render();
+});
 
-                if (filtered.length > 0) {
-                    contentDiv.appendChild(sectionDiv);
-                }
-            }
+function render(){
+  const term = qEl.value.trim();
+  clearBtn.hidden = term === '';
+  let total = 0, html = '';
+  for(const c of CATS){
+    if(cat !== 'all' && cat !== c) continue;
+    const list = TERMS.filter(t => t.c === c && (!docOnly || t.f === 3) && hit(t, term));
+    if(!list.length) continue;
+    total += list.length;
+    html += `<section class="sec"><div class="sec__head"><h2>${esc(c)}</h2><span class="n">${list.length}</span></div>` +
+      list.map(t => `<article class="entry">
+        <div class="key"><div class="row">
+          <h3 class="term">${hi(t.n, term)}</h3>
+          <button class="say" type="button" data-say="${esc(t.n)}" aria-label="${esc(t.n)} 발음 듣기">
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.2 10.4 6 2 10.8z"/></svg>
+          </button>${freq(t.f)}
+        </div><p class="pron">/${hi(t.p, term)}/</p></div>
+        <p class="def">${hi(t.d, term)}</p></article>`).join('') + '</section>';
+  }
+  if(!total){
+    html = `<div class="empty"><h3>조건에 맞는 용어가 없습니다</h3>
+      <p>영문 표기, 한글 발음, 정의 세 곳을 모두 찾아봤습니다. 검색어를 줄이거나 분야를 전체로 바꿔 보세요.</p>
+      <button type="button" id="reset">검색 조건 지우기</button></div>`;
+  }
+  results.innerHTML = html;
+  countEl.innerHTML = (term || cat !== 'all' || docOnly)
+    ? `<b>${total}</b> / ${TERMS.length}개`
+    : `총 <b>${TERMS.length}</b>개 용어`;
+}
 
-            // 검색 결과 통계
-            statsDiv.textContent = `검색 결과: ${totalResults}개`;
+results.addEventListener('click', e => {
+  const s = e.target.closest('[data-say]');
+  if(s){ say(s.dataset.say, s); return; }
+  if(e.target.id === 'reset'){
+    qEl.value = ''; cat = 'all'; docOnly = false; buildRail(); render(); qEl.focus();
+  }
+});
+qEl.addEventListener('input', render);
+clearBtn.addEventListener('click', () => { qEl.value = ''; render(); qEl.focus(); });
+document.addEventListener('keydown', e => {
+  if(e.key === '/' && document.activeElement !== qEl){ e.preventDefault(); qEl.focus(); }
+  if(e.key === 'Escape' && document.activeElement === qEl){ qEl.value = ''; render(); }
+});
 
-            // 결과가 없으면 메시지 표시
-            if (totalResults === 0) {
-                contentDiv.innerHTML = `<div class="no-results">
-                    검색된 용어가 없습니다 🤔<br>
-                    다른 검색어를 시도해보세요!
-                </div>`;
-            }
-        }
+let last = -1;
+function specimen(){
+  let i; do { i = Math.floor(Math.random() * TERMS.length); } while(TERMS.length > 1 && i === last);
+  last = i; const t = TERMS[i];
+  $('#specTerm').textContent = t.n.replace(/\s*\(.*?\)\s*/, '');
+  $('#specPron').textContent = '/' + t.p + '/';
+  $('#specDef').textContent = t.d;
+  const b = $('#specSay'); b.dataset.say = t.n; b.setAttribute('aria-label', t.n + ' 발음 듣기');
+}
+$('#shuffle').addEventListener('click', specimen);
+$('#specSay').addEventListener('click', e => say(e.currentTarget.dataset.say, e.currentTarget));
 
-        // 검색 이벤트
-        searchInput.addEventListener('input', () => {
-            render();
-        });
+$('#foot').innerHTML =
+  `<span>${CATS.length}개 분야 · ${TERMS.length}개 용어</span><span>마지막 업데이트 ${UPDATED}</span>`;
+$('#legend').innerHTML = '사용 빈도 &nbsp;' + freq(3) + ' 자주 쓰임 &nbsp;&nbsp;' + freq(2) + ' 가끔 쓰임 &nbsp;&nbsp;' + freq(1) + ' 드묾';
+buildRail(); render(); specimen();
+</script>
 
-        // 카테고리 필터 이벤트
-        categoryFilters.forEach(btn => {
-            btn.addEventListener('click', () => {
-                categoryFilters.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentCategory = btn.dataset.category;
-                render();
-            });
-        });
-
-        // 초기 렌더링
-        render();
-    </script>
 </body>
 </html>
