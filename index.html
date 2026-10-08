@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AI·인프라·거버넌스 404개 용어를 영문 표기, 한글 발음, 한 줄 정의, 사용 빈도로 정리한 사전.">
+<meta name="description" content="AI·인프라·거버넌스 404개 용어 사전과 매일 3문제 랜덤 퀴즈.">
 <title>클러쉬 AI 용어 사전</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -142,6 +142,74 @@ main{padding-bottom:72px}
 footer{border-top:1px solid var(--rule);padding-block:24px 56px;
   font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
   color:var(--ink-mid);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+/* ---- 메뉴 ---- */
+.nav{display:flex;gap:6px;padding-block:4px 0}
+.nav button{border:1.5px solid var(--rule);background:transparent;color:var(--ink-mid);
+  border-radius:100px;padding:8px 18px;cursor:pointer;font-family:var(--sans);
+  font-size:.9rem;font-weight:600;transition:border-color .15s,color .15s,background .15s}
+.nav button:hover{border-color:var(--ink);color:var(--ink)}
+.nav button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.nav .dot{display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--accent);margin-left:8px;vertical-align:middle}
+
+/* ---- 퀴즈 ---- */
+.quiz{padding-block:clamp(20px,3vw,34px) 80px;max-width:760px}
+.quiz__top{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  flex-wrap:wrap;border-bottom:1.5px solid var(--ink);padding-bottom:10px}
+.quiz__top h2{font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
+.quiz__meta{font-family:var(--mono);font-size:.72rem;color:var(--ink-mid);
+  font-variant-numeric:tabular-nums}
+.quiz__steps{display:flex;gap:6px;padding-block:18px}
+.quiz__steps i{width:28px;height:4px;border-radius:2px;background:var(--rule);display:block}
+.quiz__steps i.done{background:var(--accent)}
+.quiz__steps i.miss{background:var(--mark)}
+.quiz__steps i.now{background:var(--ink)}
+.qcard{background:var(--card);border:1.5px solid var(--rule);border-radius:14px;
+  padding:clamp(18px,3vw,28px)}
+.qcard__eyebrow{font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent)}
+.qcard__q{font-size:clamp(1rem,2.4vw,1.2rem);line-height:1.65;margin-top:12px;
+  font-weight:500;text-wrap:pretty}
+.qcard__q .blank{display:inline-block;min-width:70px;border-bottom:2.5px solid var(--accent);
+  vertical-align:baseline}
+.opts{display:grid;gap:9px;margin-top:22px}
+.opts button{text-align:left;border:1.5px solid var(--rule);background:var(--paper);
+  color:var(--ink);border-radius:10px;padding:13px 16px;cursor:pointer;
+  font-family:var(--sans);font-size:.95rem;font-weight:500;
+  display:flex;align-items:center;gap:11px;transition:border-color .12s,background .12s}
+.opts button:hover:not(:disabled){border-color:var(--ink)}
+.opts button:disabled{cursor:default}
+.opts .mk{font-family:var(--mono);font-size:.72rem;color:var(--ink-mid);flex:none;
+  width:18px;height:18px;border:1.5px solid var(--rule);border-radius:4px;
+  display:grid;place-items:center}
+.opts button.right{border-color:var(--accent);background:var(--chip-bg)}
+.opts button.right .mk{background:var(--accent);border-color:var(--accent);color:#fff}
+.opts button.wrong{border-color:var(--mark);background:var(--mark)}
+.opts button.wrong .mk{background:var(--mark);border-color:var(--mark);color:var(--mark-fg)}
+.reveal{margin-top:20px;padding-top:18px;border-top:1px solid var(--rule)}
+.reveal__verdict{font-weight:700;font-size:.95rem}
+.reveal__verdict.ok{color:var(--accent)}
+.reveal__term{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+.reveal__name{font-family:var(--grotesk);font-weight:700;font-stretch:112%;font-size:1.1rem;
+  letter-spacing:-.02em}
+.reveal__pron{font-family:var(--mono);font-size:.84rem;color:var(--accent)}
+.reveal__def{color:var(--ink-mid);font-size:.93rem;margin-top:8px}
+.reveal__cat{font-family:var(--mono);font-size:.68rem;color:var(--ink-mid);margin-top:10px}
+.qnext{margin-top:20px;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);
+  border-radius:100px;padding:11px 24px;font-family:var(--sans);font-size:.92rem;
+  font-weight:600;cursor:pointer}
+.qdone{text-align:left;padding-block:10px}
+.qdone__score{font-family:var(--grotesk);font-weight:700;font-stretch:112%;
+  font-size:clamp(2rem,6vw,3.2rem);letter-spacing:-.03em;line-height:1}
+.qdone__msg{color:var(--ink-mid);margin-top:12px;font-size:.95rem}
+.qdone__list{margin-top:24px;display:grid;gap:0}
+.qdone__row{display:flex;gap:12px;align-items:baseline;padding-block:12px;
+  border-bottom:1px solid var(--rule)}
+.qdone__row .ic{font-family:var(--mono);font-size:.75rem;flex:none;color:var(--ink-mid)}
+.qdone__row .nm{font-family:var(--grotesk);font-weight:700;font-stretch:112%;font-size:.98rem}
+.qdone__row .df{color:var(--ink-mid);font-size:.88rem;margin-top:3px}
+
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -155,6 +223,12 @@ footer{border-top:1px solid var(--rule);padding-block:24px 56px;
   <p class="sub">영문 표기, 한글 발음, 한 줄 정의. 영어·한글·설명 어느 쪽으로 검색해도 찾을 수 있습니다. 각 용어 옆 세 칸은 사용 빈도입니다. 사내 문서에서 실제로 쓰인 횟수(60%)와 업계 전반의 사용 빈도(40%)를 합산했습니다.</p>
 </header>
 
+<nav class="wrap nav" aria-label="메뉴">
+  <button type="button" id="navDict" aria-pressed="true">사전</button>
+  <button type="button" id="navQuiz" aria-pressed="false">오늘의 퀴즈<span class="dot" id="navDot"></span></button>
+</nav>
+
+<div id="dictView">
 <section class="wrap" aria-label="오늘의 용어">
   <div class="spec">
     <div class="spec__label">오늘의 용어</div>
@@ -187,6 +261,16 @@ footer{border-top:1px solid var(--rule);padding-block:24px 56px;
   <p class="legend" id="legend"></p>
   <div id="results"></div>
 </main>
+</div>
+
+<section class="wrap quiz" id="quizView" hidden>
+  <div class="quiz__top">
+    <h2 id="quizTitle">오늘의 퀴즈</h2>
+    <span class="quiz__meta" id="quizMeta"></span>
+  </div>
+  <div class="quiz__steps" id="quizSteps"></div>
+  <div id="quizBody"></div>
+</section>
 
 <footer class="wrap" id="foot"></footer>
 
@@ -303,6 +387,186 @@ $('#specSay').addEventListener('click', e => say(e.currentTarget.dataset.say, e.
 
 $('#foot').innerHTML =
   `<span>${CATS.length}개 분야 · ${TERMS.length}개 용어</span><span>마지막 업데이트 ${UPDATED}</span>`;
+/* ──────────────── 오늘의 퀴즈 ──────────────── */
+const CONTEXTS = {"AI (Artificial Intelligence)":"이번 중기계획은 전사 ___ 도입을 전제로 짜라는 게 위에서 내려온 방향입니다.","Machine Learning (ML)":"룰 기반으로는 예외 케이스를 못 잡으니까 ___ 방식으로 전환하자는 게 제안 요지입니다.","Deep Learning":"이미지 판독 정확도를 더 올리려면 결국 ___ 쪽으로 가야 합니다.","LLM (Large Language Model)":"폐쇄망이라 외부 API를 못 쓰니까 오픈웨이트 ___을 내부에 올리는 방향으로 검토 중입니다.","sLLM (Small Language Model)":"GPU 예산이 빠듯해서 전체를 대형 모델로 가긴 어렵고, 일부 업무는 ___로 돌리는 게 현실적입니다.","Foundation Model":"개별 과제마다 모델을 새로 만들 게 아니라 ___ 하나 놓고 파생시키는 구조로 가야 합니다.","Inference":"학습은 1회성이지만 ___ 비용은 매달 나가니까, 단가 산정을 다시 해주세요.","Training":"___ 돌리는 동안 다른 팀 작업이 전부 밀려서 일정 조율이 필요합니다.","Fine-tuning":"범용 모델이 우리 업무 용어를 못 알아들어서 사내 데이터로 ___ 한 번 돌릴 계획입니다.","Parameter":"모델 크기가 70B라는 건 ___가 700억 개라는 뜻입니다.","Token":"과금이 ___ 단위라서, 프롬프트에 문서를 통째로 넣으면 비용이 바로 뜁니다.","Context Window":"문서가 길어서 한 번에 안 들어갑니다. ___ 한계를 먼저 확인해 주세요.","Hallucination":"답변은 그럴듯한데 근거 문서를 찾아보니 그런 내용이 없더라고요. ___ 문제부터 잡아야 합니다.","Grounding":"답변마다 출처가 붙게 ___을 확실히 걸어야 고객사 검수를 통과합니다.","RAG (Retrieval-Augmented Generation)":"규정이 수시로 바뀌는데 매번 재학습은 불가능하니까 ___로 가는 게 맞습니다.","Retrieval":"답변 품질이 안 나오는 원인이 모델이 아니라 ___ 단계에서 엉뚱한 문서를 가져오는 거였습니다.","Chunking":"표가 중간에서 잘려서 검색이 안 되고 있습니다. ___ 전략을 다시 짜야 합니다.","Vector Database":"임베딩을 어디에 쌓을지부터 정해야 하는데, ___ 선정이 아직 안 끝났습니다.","Embedding":"같은 뜻인데 단어가 달라서 검색이 안 되는 건 ___ 품질 문제입니다.","Hybrid Search":"품번이나 고유명사 검색이 약해서, 키워드 검색을 같이 태우는 ___로 바꿨습니다.","ReRanking":"1차 검색 결과 상위에 쓸모없는 문서가 섞여 있어서 ___ 단계를 하나 더 넣었습니다.","Ontology":"부서마다 같은 걸 다르게 부르고 있어서, ___부터 정의하지 않으면 연결이 안 됩니다.","Knowledge Graph":"개체 간 관계까지 타고 들어가야 하는 질문이라 ___ 기반으로 설계했습니다.","Text-to-SQL":"현업에서 쿼리를 못 짜니까 ___ 붙여서 자연어로 바로 뽑게 하자는 요구가 들어왔습니다.","AI OCR":"계약서가 전부 스캔본이라 ___ 먼저 태우지 않으면 아무것도 못 합니다.","AI Agent":"단순 질의응답을 넘어서 승인 신청까지 알아서 처리하는 ___를 만들어 달라는 요구입니다.","Agentic AI":"사람이 매번 다음 단계를 지시하는 게 아니라, ___ 방식으로 스스로 판단해서 진행하게 하자는 겁니다.","MCP (Model Context Protocol)":"시스템마다 연동을 따로 짜면 유지보수가 안 됩니다. ___ 표준으로 붙이는 걸 권합니다.","Function Calling":"모델이 직접 사내 API를 호출해야 하니까 ___ 스펙부터 정의해 주세요.","Guardrail":"모델이 개인정보를 그대로 뱉을 위험이 있어서 입출력단에 ___를 걸어뒀습니다.","Human-in-the-Loop":"금액이 큰 건은 자동 실행하면 안 되니까 ___ 승인 단계를 하나 넣었습니다.","Prompt Injection":"외부 문서에 숨겨둔 문장이 모델 지시를 가로채는 ___ 가능성을 보안팀에서 지적했습니다.","Golden Test Set":"배포할 때마다 품질이 들쭉날쭉해서 ___ 만들어 두고 자동 회귀 테스트 돌리고 있습니다.","Evaluation (Evals)":"감으로 좋아졌다고 말하면 설득이 안 됩니다. ___ 지표로 숫자를 뽑아 오세요.","Code Interpreter":"계산이 필요한 질문은 모델이 추정하면 안 되니까 ___로 실제 실행시키고 있습니다.","AgentOps":"에이전트를 띄워놓고 방치하면 품질이 무너집니다. ___ 체계가 같이 가야 합니다.","Trace":"왜 그런 답이 나왔는지 설명을 못 하면 곤란합니다. ___ 로그를 남기게 해주세요.","GPU":"___ 수급이 안 돼서 착수 일정이 두 달 밀렸습니다.","NPU":"전력 효율 때문에 일부 추론 워크로드는 ___ 쪽으로 돌리는 걸 검토하고 있습니다.","GPUaaS":"자체 구축 대신 필요한 만큼만 쓰는 ___ 모델로 제안하는 게 단가 경쟁력이 있습니다.","AIDC (AI Data Center)":"전력하고 냉각이 일반 센터랑 달라서, ___ 기준으로 다시 설계해야 합니다.","H100 / H200":"메모리 대역폭 때문에 이번 건은 ___ 쪽으로 사양을 올려 잡았습니다.","HBM":"모델이 커질수록 결국 ___ 용량이 병목입니다.","VRAM":"배치 크기를 더 못 올리는 건 ___가 꽉 차서입니다.","MIG (Multi-Instance GPU)":"카드 한 장을 여러 팀이 나눠 쓰게 ___로 분할해서 할당했습니다.","DCGM":"노드별 온도하고 오류 카운트는 ___에서 다 수집되고 있습니다.","InfiniBand":"다중 노드 학습에서 통신이 병목이라 ___로 깔아야 합니다.","RDMA":"CPU 안 거치고 바로 메모리에 꽂는 ___ 구성이면 지연이 확 줄어듭니다.","GDS (GPUDirect Storage)":"데이터 로딩이 느려서 ___ 적용해서 스토리지에서 GPU로 바로 쏘게 바꿨습니다.","Fragmentation":"카드는 남는데 큰 작업이 안 들어갑니다. 자원이 잘게 흩어진 ___ 상태입니다.","Gang Scheduling":"분산 학습이 자원 절반만 잡고 멈춰 있습니다. ___이 안 걸려 있어서 그렇습니다.","Makespan":"전체 작업이 다 끝나는 시점, 그러니까 ___ 기준으로는 11.8% 단축됐습니다.","JCT (Job Completion Time)":"개별 작업이 제출부터 완료까지 걸린 시간, ___ 평균을 비교군이랑 같이 뽑아 주세요.","Utilization":"도입 전 50%였던 GPU ___이 지금 85%까지 올라왔습니다.","Idle Resource":"할당만 해두고 안 쓰는 ___ 회수 정책이 없으면 비용이 계속 샙니다.","Preemption":"급한 작업이 들어오면 우선순위 낮은 걸 ___으로 밀어내게 설정해 뒀습니다.","Checkpoint":"3일짜리 학습이 중간에 죽었는데 ___이 없어서 처음부터 다시 돌렸습니다.","Distributed Training":"단일 카드에 안 올라가는 크기라 ___으로 쪼개서 돌려야 합니다.","Quantization":"추론 비용을 낮추려면 INT8로 ___해서 올리는 게 가장 효과가 큽니다.","Distillation":"대형 모델을 그대로 쓰기엔 비싸서, ___로 작게 뽑아 서비스에 올렸습니다.","Kubernetes (K8s)":"표준 ___ 호환성을 못 맞추면 금융권 입찰에 못 들어갑니다.","Container":"환경 차이로 로컬에선 되는데 서버에서 안 되는 문제는 ___로 묶으면 없어집니다.","Pod":"노드 하나에 ___가 300개씩 떠 있어서 스케줄링이 꼬였습니다.","Namespace":"팀별로 자원을 섞어 쓰면 안 되니까 ___ 단위로 격리해 뒀습니다.","Control Plane":"자원이 GPU든 NPU든 상관없이 하나의 ___에서 통제되는 게 저희 강점입니다.","Multi-Cluster":"센터가 두 곳이라 ___ 상태를 한 화면에서 보셔야 할 겁니다.","Federation":"독립된 클러스터 여러 개를 하나로 묶어서 제어하는 ___ 구조로 제안했습니다.","CAPI (Cluster API)":"클러스터 증설을 수작업으로 하면 사고 납니다. ___로 선언형 관리해야 합니다.","IaC (Infrastructure as Code)":"인프라 설정이 사람 머릿속에만 있으면 안 됩니다. ___로 코드화해 주세요.","Helm":"설치 스크립트를 매번 손보지 말고 ___ 차트로 버전 관리합시다.","Operator":"장애 나면 사람이 붙어야 하는 구조인데, ___로 자동 복구되게 짜면 당직 부담이 줍니다.","Air-gapped (폐쇄망)":"이 고객사는 외부 인터넷이 아예 끊긴 ___ 환경이라 설치형으로만 가능합니다.","On-Premise":"데이터 반출이 안 되는 곳이라 클라우드는 못 쓰고 ___로 깔아야 합니다.","Private Cloud":"보안 요건상 퍼블릭은 어렵고 ___ 구성으로 제안하는 게 맞습니다.","VPC":"퍼블릭 쓰더라도 ___ 안에 격리해서 외부 트래픽을 끊어두면 설득이 됩니다.","IaaS / PaaS / SaaS":"저희는 인프라만 파는 게 아니라 ___ 중 플랫폼 계층까지 책임집니다.","Vendor Lock-in":"특정 벤더에 묶이는 ___ 우려 때문에 고객사가 표준 기술 기반을 요구하고 있습니다.","CNCF":"___ 인증을 5년 연속 유지하고 있다는 게 입찰에서 꽤 먹힙니다.","MSA":"모놀리식으로는 부분 배포가 안 돼서 ___로 쪼개는 작업을 같이 진행합니다.","Service Mesh":"서비스 간 통신 제어하고 관측을 애플리케이션 밖으로 빼려면 ___가 필요합니다.","Governance":"데이터 접근 권한하고 감사 이력이 정리가 안 돼 있습니다. ___ 체계부터 잡고 들어가야 합니다.","Data Governance":"같은 지표인데 부서마다 숫자가 다릅니다. ___ 문제입니다.","AI Governance":"모델을 누가 승인하고 누가 책임지는지가 없습니다. ___ 정립이 선행돼야 합니다.","Metadata":"항목 설명이 없어서 현업이 어느 컬럼을 써야 할지 모릅니다. ___부터 채워야 합니다.","Data Catalog":"데이터가 어디 있는지 몰라서 매번 물어봅니다. ___ 구축이 1차 과제입니다.","Data Lineage":"이 지표가 어느 원천에서 왔는지 못 밝히면 감사에서 걸립니다. ___ 추적이 필요합니다.","Data Quality":"결측하고 중복이 이 정도면 학습을 돌려도 의미가 없습니다. ___ 먼저 잡아야 합니다.","Data Standardization":"용어하고 코드가 시스템마다 달라서, ___ 작업이 전체 일정의 절반입니다.","AI-Ready Data":"데이터가 있다고 바로 쓸 수 있는 게 아닙니다. ___ 상태로 만들어야 합니다.","PII":"학습 데이터에 ___가 섞여 있으면 바로 문제가 됩니다. 비식별화부터 돌려주세요.","De-identification":"개인정보를 그대로 넣을 순 없으니 ___ 처리된 데이터셋으로 교체했습니다.","RBAC":"사용자마다 볼 수 있는 문서가 달라서, 검색 단계에서 ___ 권한 검사가 들어가야 합니다.","Audit Trail":"누가 언제 무엇을 조회했는지 ___이 남아야 규제 대응이 됩니다.","Multi-tenancy":"한 플랫폼을 여러 계열사가 같이 쓰는 구조라 ___ 격리가 핵심 요건입니다.","Explainability (XAI)":"여신 심사에 쓰려면 왜 그 결론이 나왔는지 설명이 돼야 합니다. ___ 요건입니다.","Reproducibility":"같은 입력에 매번 다른 답이 나오면 검수를 못 합니다. ___ 확보가 먼저입니다.","MLOps":"모델을 수동으로 올리고 있어서 배포 때마다 사고가 납니다. ___ 체계를 넣어야 합니다.","AIOps":"장애 징후를 사람이 보고 있을 순 없으니 ___로 탐지하고 자동 조치하게 했습니다.","DataOps":"파이프라인 품질하고 계보를 상시 관리하는 ___ 영역이 이번 범위에 포함됩니다.","LLMOps":"프롬프트 버전 관리하고 토큰 비용 추적까지 들어가야 하니 ___ 범주입니다.","FinOps":"GPU 비용이 어느 팀에서 얼마나 나갔는지 안 보입니다. ___ 관점에서 과금 체계를 잡아야 합니다.","SecOps":"접근 제어하고 감사 추적은 ___ 쪽에서 정책을 받아서 반영하겠습니다.","PlatformOps":"이기종 자원하고 여러 클러스터를 통합 관제하는 ___ 모듈이 제품의 중심입니다.","CI/CD":"변경할 때마다 수동 검증하면 못 따라갑니다. ___ 파이프라인을 태워야 합니다.","Deployment":"학습은 됐는데 ___가 2주째 막혀 있습니다. 승인 프로세스가 문제입니다.","Serving":"추론을 API로 노출하는 ___ 단계는 KServe로 표준화했습니다.","Model Drift":"처음엔 잘 맞았는데 반년 지나니 정확도가 떨어집니다. 전형적인 ___입니다.","Shadow Deployment":"바로 반영하긴 위험하니까 ___로 실제 트래픽만 흘려서 비교해 봅시다.","Canary Deployment":"전체에 한 번에 밀지 말고 ___로 5%만 먼저 열어보시죠.","Rollback":"문제 생기면 바로 ___ 가능한 구조인지부터 확인해 주세요.","Observability":"로그는 쌓이는데 원인 파악이 안 됩니다. ___ 설계가 빠져 있습니다.","MTTR":"장애 복구 평균 시간, ___이 90분에서 13.5분으로 줄었습니다.","SLA":"가용성 몇 퍼센트까지 보장할지 ___에 숫자로 박아야 계약이 됩니다.","SLO":"대외 약속 말고 내부 목표치인 ___부터 합의하고 가시죠.","Self-healing":"노드가 죽어도 사람 안 부르고 ___으로 복구되게 해두면 당직이 편합니다.","Managed Service":"구축만 하고 빠지는 게 아니라 ___로 운영까지 책임지는 게 저희 모델입니다.","Chaos Engineering":"실제로 장애를 넣어봐야 압니다. ___ 관점에서 한 번 돌려보시죠.","Latency":"정확도는 괜찮은데 ___가 4초라 현업이 안 씁니다.","Throughput":"동시 사용자 늘어나면 ___가 버티는지부터 확인해야 합니다.","TTFT (Time To First Token)":"체감 속도는 전체 생성 시간보다 ___가 좌우합니다.","Workload":"어떤 ___가 언제 들어오는지 패턴을 봐야 사이징이 나옵니다.","Accuracy":"___만 보면 95%인데, 실제로는 소수 케이스를 다 틀리고 있습니다.","Precision":"오탐을 줄이는 게 중요하니 ___ 쪽에 가중치를 두고 튜닝했습니다.","Recall":"놓치면 안 되는 건이라 ___을 우선해서 임계값을 낮췄습니다.","F1 Score":"두 지표가 상충해서 ___로 균형을 봤습니다.","Benchmark":"자체 측정만으로는 설득이 안 되니 공인 ___ 결과를 붙입시다.","Ground Truth":"정답 기준인 ___이 없으면 성능을 비교할 수가 없습니다.","Faithfulness":"답변이 근거 문서에서 안 벗어나는 정도, ___ 지표를 같이 보셔야 합니다.","AX (AI Transformation)":"단순 시스템 구축이 아니라 업무 체계를 바꾸는 ___ 과제로 봐주셔야 합니다.","DX (Digital Transformation)":"___은 이미 한 바퀴 돌았고, 이제 AI 전환 단계라는 게 고객사 인식입니다.","PoC":"___는 성공했는데 확산이 안 되는 게 가장 흔한 실패 패턴입니다.","Adoption Gap":"검증은 끝났는데 현업이 안 씁니다. 전형적인 ___입니다.","TCO":"도입가만 보지 마시고 3년 ___ 기준으로 비교해 주셔야 합니다.","ROI":"투자 대비 효과, ___를 숫자로 못 보여주면 내년 예산이 안 잡힙니다.","CAPEX / OPEX":"자체 구축이면 ___ 중 자본적 지출로 잡히고, 클라우드면 운영비로 처리됩니다.","KPI":"현업 ___에 연결되지 않으면 아무리 잘 만들어도 안 씁니다.","FDE (Forward Deployed Engineer)":"고객사에 상주하면서 요구를 바로 기술로 옮기는 ___ 인력이 투입됩니다.","E2E (End-to-End)":"인프라부터 애플리케이션까지 ___로 수행 가능한 게 저희 차별점입니다.","Land and Expand":"작게 들어가서 성과 내고 범위를 넓히는 ___ 전략으로 접근하시죠.","Recurring Revenue":"일회성 구축보다 운영 계약에서 나오는 ___ 비중을 늘려야 합니다.","SI":"단순 ___ 사업자로 보이면 단가 경쟁에 말려듭니다.","TAM":"전체 시장 규모인 ___부터 잡고, 실제 접근 가능한 범위를 좁혀 갑시다.","CAGR":"연평균 성장률 ___ 기준으로 보면 3년 뒤 시장이 두 배가 됩니다.","Consortium":"단독으로는 자격이 안 돼서 ___ 구성해서 들어가야 합니다.","SPC":"사업 수행 주체로 별도 ___를 세우는 구조로 협의 중입니다.","Sovereign AI":"데이터하고 모델을 외부에 의존하지 않겠다는 ___ 기조가 공공 쪽 입찰 기준이 됐습니다.","EU AI Act":"유럽 수출 건은 ___ 고위험 분류에 걸리는지부터 확인해야 합니다.","AI 기본법 (Korea AI Basic Act)":"___이 올해 1월부터 시행 중이라 고지 의무를 점검해 두셔야 합니다.","High-Risk AI":"채용이나 신용평가에 쓰이면 ___로 분류돼서 요건이 훨씬 빡빡해집니다.","ISO/IEC 42001":"AI 경영체계 국제 표준인 ___ 인증을 준비하자는 얘기가 나왔습니다.","KOLAS":"자체 측정이 아니라 ___ 공인시험성적서로 근거를 붙여야 합니다.","Red Teaming":"출시 전에 공격자 관점에서 뚫어보는 ___ 한 번 돌리고 가시죠.","Zero Trust":"내부망이라고 믿지 않고 매번 검증하는 ___ 모델로 가야 한다는 게 보안팀 의견입니다.","Deepfake":"합성 콘텐츠 식별 의무 때문에 ___ 대응 방안을 문서에 넣어야 합니다.","Watermarking":"AI가 만든 결과물임을 표시하는 ___ 요건이 규제에 들어가 있습니다.","Algorithm":"규칙이 수백 개라 사람이 못 따라갑니다. ___으로 정리해서 자동 판정하게 바꿉시다.","Model":"이번 분기에 ___ 세 개를 운영에 올리는 게 목표입니다.","Feature":"입력으로 쓸 ___를 뭘로 잡느냐에 따라 성능이 완전히 달라집니다.","Dataset":"학습에 쓸 ___부터 확보가 안 돼서 착수가 늦어지고 있습니다.","Clustering":"고객을 미리 나눠놓은 기준이 없으니 ___로 비슷한 그룹부터 묶어봅시다.","Layer":"모델이 깊어질수록, 그러니까 ___를 쌓을수록 학습 비용이 올라갑니다.","Epoch":"___를 몇 번 돌릴지에 따라 GPU 점유 시간이 결정됩니다.","Prompt":"같은 모델인데 결과가 다른 건 ___ 차이입니다.","Memory":"이전 대화를 기억 못 하니까 매번 처음부터 설명해야 합니다. ___ 설계가 빠졌습니다.","CPU":"추론은 GPU로 돌지만 전처리는 전부 ___에서 걸립니다.","GPU Farm":"수천 장 규모의 ___을 직접 운영해 본 경험이 입찰에서 결정적이었습니다.","FLOPs":"연산량을 ___ 기준으로 환산해서 필요한 카드 수를 역산했습니다.","Node":"___ 하나가 빠져도 작업이 안 죽게 구성해 주세요.","Cloud Native":"레거시를 그대로 옮기면 의미가 없습니다. ___ 구조로 다시 짜야 합니다.","DaemonSet":"모니터링 에이전트는 모든 노드에 깔려야 하니까 ___으로 배포했습니다.","Single Control Plane":"자원이 흩어져 있어도 ___에서 통제된다는 게 핵심 메시지입니다.","Scheduler":"작업이 자꾸 한쪽 노드에만 몰립니다. ___ 정책을 손봐야 합니다.","Queue":"팀별로 대기열을 따로 두니까 자원이 놉니다. 단일 ___로 합치는 게 맞습니다.","HA (High Availability)":"장애 나도 서비스는 떠 있어야 하니까 ___ 구성은 필수 요건입니다.","Public Cloud":"초기 비용 부담이 크면 ___부터 시작하고 나중에 내재화하는 안도 있습니다.","CSP":"___ 세 곳 견적을 다 받아서 비교표로 올려주세요.","DevOps":"개발하고 운영이 분리돼 있어서 배포가 느립니다. ___ 문화로 가야 합니다.","Pipeline":"수집부터 배포까지 ___로 묶어두면 사람 손이 안 탑니다.","Monitoring":"배포하고 끝이 아닙니다. ___ 지표를 누가 볼지까지 정해야 합니다.","Prometheus":"지표 수집은 ___로 받고 대시보드는 그라파나로 보고 있습니다.","Market Share (M/S)":"작년 기준 저희 ___가 몇 퍼센트인지 숫자가 있어야 합니다.","Event Backbone":"노드끼리 상태를 밀리초 단위로 주고받는 ___ 구조가 성능의 핵심입니다."};
+const EPOCH = '2026-10-08';     // 1일차
+const PER_DAY = 3;
+
+function dayIndex(){
+  const now = new Date();
+  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  const [y,m,d] = EPOCH.split('-').map(Number);
+  return Math.max(0, Math.floor((today - Date.UTC(y, m-1, d)) / 86400000));
+}
+function rng(seed){                      // mulberry32
+  let a = seed >>> 0;
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function permutation(cycle){             // 바퀴마다 다른 순서, 바퀴 안에서는 중복 없음
+  const r = rng(cycle * 2654435761 + 97);
+  const a = TERMS.map((_, i) => i);
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(r() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const permCache = {};
+function pick(g){                        // g = 전체 통산 문항 번호
+  const cycle = Math.floor(g / TERMS.length), pos = g % TERMS.length;
+  const perm = permCache[cycle] || (permCache[cycle] = permutation(cycle));
+  return { term: TERMS[perm[pos]], cycle, pos };
+}
+function options(term, g){
+  const r = rng(g * 7919 + 13);
+  const same = TERMS.filter(t => t.c === term.c && t.n !== term.n);
+  const rest = TERMS.filter(t => t.c !== term.c && t.n !== term.n);
+  const draw = (pool, n) => {
+    const p = pool.slice(); const out = [];
+    while(out.length < n && p.length) out.push(p.splice(Math.floor(r() * p.length), 1)[0]);
+    return out;
+  };
+  const wrong = draw(same, 3);
+  if(wrong.length < 3) wrong.push(...draw(rest, 3 - wrong.length));
+  const all = [term, ...wrong];
+  for(let i = all.length - 1; i > 0; i--){
+    const j = Math.floor(r() * (i + 1));
+    [all[i], all[j]] = [all[j], all[i]];
+  }
+  return all;
+}
+
+const D = dayIndex();
+const QUIZ = Array.from({length: PER_DAY}, (_, k) => {
+  const { term, cycle, pos } = pick(D * PER_DAY + k);
+  return { term, cycle, pos, opts: options(term, D * PER_DAY + k),
+           ctx: CONTEXTS[term.n] || null };
+});
+const STORE_KEY = 'quiz-' + D;
+let answers = [];
+try { answers = JSON.parse(localStorage.getItem(STORE_KEY)) || []; } catch(e) { answers = []; }
+function save(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(answers)); } catch(e) {} }
+
+const quizBody = $('#quizBody'), quizSteps = $('#quizSteps'), quizMeta = $('#quizMeta');
+
+function drawSteps(cur){
+  quizSteps.innerHTML = QUIZ.map((_, i) => {
+    const a = answers[i];
+    const cls = a ? (a.ok ? 'done' : 'miss') : (i === cur ? 'now' : '');
+    return `<i class="${cls}"></i>`;
+  }).join('');
+}
+function drawMeta(){
+  const first = QUIZ[0], last = QUIZ[QUIZ.length - 1];
+  quizMeta.textContent =
+    `${first.cycle + 1}바퀴째 · ${first.pos + 1}–${last.pos + 1} / ${TERMS.length}`;
+  const left = QUIZ.length - answers.length;
+  $('#navDot').hidden = left === 0;
+}
+
+function renderQuestion(i){
+  const q = QUIZ[i], a = answers[i];
+  drawSteps(i); drawMeta();
+  const body = q.ctx
+    ? esc(q.ctx).replace('___', '<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;</span>')
+    : esc(q.term.d);
+  quizBody.innerHTML = `
+    <div class="qcard">
+      <div class="qcard__eyebrow">${q.ctx ? '회의 중 한 마디' : '이 설명에 해당하는 용어는'} · ${i+1}/${QUIZ.length}</div>
+      <p class="qcard__q">${q.ctx ? '"' + body + '"' : body}</p>
+      <div class="opts" id="opts">
+        ${q.opts.map((o, k) => `<button type="button" data-k="${k}" ${a ? 'disabled' : ''}>
+            <span class="mk">${'ABCD'[k]}</span><span>${esc(o.n)}</span></button>`).join('')}
+      </div>
+      <div id="reveal"></div>
+    </div>`;
+  if(a) showReveal(i, a.k);
+  else $('#opts').addEventListener('click', e => {
+    const b = e.target.closest('button[data-k]'); if(!b) return;
+    const k = +b.dataset.k;
+    answers[i] = { k, ok: QUIZ[i].opts[k].n === QUIZ[i].term.n };
+    save(); showReveal(i, k);
+  });
+}
+function showReveal(i, k){
+  const q = QUIZ[i], ok = q.opts[k].n === q.term.n;
+  [...$('#opts').children].forEach((b, idx) => {
+    b.disabled = true;
+    if(q.opts[idx].n === q.term.n) b.classList.add('right');
+    else if(idx === k) b.classList.add('wrong');
+  });
+  drawSteps(i); drawMeta();
+  const lastOne = i === QUIZ.length - 1;
+  $('#reveal').innerHTML = `
+    <div class="reveal">
+      <p class="reveal__verdict ${ok ? 'ok' : ''}">${ok ? '정답입니다' : '아쉽네요'}</p>
+      <div class="reveal__term">
+        <span class="reveal__name">${esc(q.term.n)}</span>
+        <span class="reveal__pron">/${esc(q.term.p)}/</span>
+        <button class="say" type="button" data-say="${esc(q.term.n)}" aria-label="${esc(q.term.n)} 발음 듣기">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.2 10.4 6 2 10.8z"/></svg>
+        </button>
+      </div>
+      <p class="reveal__def">${esc(q.term.d)}</p>
+      <p class="reveal__cat">${esc(q.term.c)} · 사용 빈도 ${q.term.f}/3</p>
+      <button class="qnext" type="button" id="qnext">${lastOne ? '결과 보기' : '다음 문제'}</button>
+    </div>`;
+  $('#reveal').addEventListener('click', e => {
+    const sayBtn = e.target.closest('[data-say]');
+    if(sayBtn){ say(sayBtn.dataset.say, sayBtn); return; }
+    if(e.target.id === 'qnext') lastOne ? renderDone() : renderQuestion(i + 1);
+  });
+}
+function renderDone(){
+  const score = answers.filter(a => a && a.ok).length;
+  drawSteps(-1); drawMeta();
+  const msg = score === QUIZ.length ? '전부 맞히셨습니다. 내일 세 문제가 또 올라옵니다.'
+            : score === 0 ? '오늘 나온 용어는 사전에서 한 번 더 보고 가시죠.'
+            : '틀린 용어는 사전에서 찾아보시면 정의가 그대로 있습니다.';
+  quizBody.innerHTML = `
+    <div class="qdone">
+      <p class="qdone__score">${score} / ${QUIZ.length}</p>
+      <p class="qdone__msg">${msg}</p>
+      <div class="qdone__list">
+        ${QUIZ.map((q, i) => `<div class="qdone__row">
+          <span class="ic">${answers[i] && answers[i].ok ? '○' : '×'}</span>
+          <span><span class="nm">${esc(q.term.n)}</span>
+          <span class="reveal__pron">/${esc(q.term.p)}/</span>
+          <span class="df">${esc(q.term.d)}</span></span></div>`).join('')}
+      </div>
+      <button class="qnext" type="button" id="qagain">다시 풀기</button>
+    </div>`;
+  $('#qagain').addEventListener('click', () => {
+    answers = []; save(); renderQuestion(0);
+  });
+}
+function openQuiz(){
+  const i = answers.length >= QUIZ.length ? -1 : answers.length;
+  i === -1 ? renderDone() : renderQuestion(i);
+}
+
+/* 메뉴 전환 */
+const dictView = $('#dictView'), quizView = $('#quizView'),
+      navDict = $('#navDict'), navQuiz = $('#navQuiz');
+function show(which){
+  const q = which === 'quiz';
+  dictView.hidden = q; quizView.hidden = !q;
+  navDict.setAttribute('aria-pressed', String(!q));
+  navQuiz.setAttribute('aria-pressed', String(q));
+  if(q) openQuiz();
+  window.scrollTo({ top: 0 });
+}
+navDict.addEventListener('click', () => show('dict'));
+navQuiz.addEventListener('click', () => show('quiz'));
+drawMeta();
+
+
 $('#legend').innerHTML = '사용 빈도 &nbsp;' + freq(3) + ' 자주 쓰임 &nbsp;&nbsp;' + freq(2) + ' 가끔 쓰임 &nbsp;&nbsp;' + freq(1) + ' 드묾';
 buildRail(); render(); specimen();
 </script>
